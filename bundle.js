@@ -46,8 +46,6 @@
 
 	"use strict";
 
-	document.write("Links to solutions:");
-
 	__webpack_require__(1);
 	__webpack_require__(5);
 	__webpack_require__(6);
@@ -92,7 +90,7 @@
 
 
 	// module
-	exports.push([module.id, "\na, a:visited{\n  color: blue;\n}\n", ""]);
+	exports.push([module.id, "\nh3{\n  text-align: center;\n  text-decoration: underline;\n  color: black;\n}\n\nh3 a{\n  color: black;\n}\n\na, a:visited{\n  color: blue;\n}\n\n.table {\n  border-collapse: collapse;\n  width: 100%\n}\n\ntd, th{\n  width: inherit;\n  text-align: center;\n  padding: 8px;\n  border-bottom: 1px solid #ddd;\n}\n\n.title_column{\n  text-align: left;\n}\n\ntr:hover{\n  background-color: #ddd;\n}\n\n.id_column, .title_column, .button_column, .answer_column{\n  width: 25%\n}\n\n.button{\n  background-color: white;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px;\n}\n\n.button--state-hidden{\n  color: red;\n}\n\n.button--state-show{\n  color: black;\n}\n", ""]);
 
 	// exports
 
