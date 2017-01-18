@@ -1,7 +1,10 @@
-require("../css/style.css")
-import {solve1} from "./solution1"
-import {solve8} from "./solution8"
-import {solve13} from "./solution13"
-import {changeButtonStatus} from "./utilities"
 document.write("Links to solutions:")
-export {changeButtonStatus, solve1, solve8, solve13}
+
+require("../css/style.css")
+require("./utilities")
+require("./solution1")
+require("./solution8")
+require("./solution10")
+require("./solution13")
+require("./solution14")
+//import {changeButtonStatus} from "./utilities"

@@ -1,21 +1,23 @@
-import changeButtonStatus from "./utilities";
-var sum = 0;
-//require("utilities")
+import {changeButtonStatus} from "./utilities"
 
-export var solve1 = () => {
-  //let sum = 0;
-  if(!sum){
-    for(let i = 3 ; i < 1000 ; i++){
-      if(!(i%3 || i%5)){
-        sum += i;
-      }
-    }
-  }
-  //document.write(sum);
+var sum = 0;
+
+$(document).ready(function () {
   var solution1 = document.getElementById("solution1");
   var button = document.getElementById("button_solution1");
-  //console.log(sum);
-  app.changeButtonStatus(button, solution1, sum);
-  // alert("Answer: " + sum);
-}
-//solve1();
+
+  var solve1 = () => {
+    if(!sum){ // if not calculted yet
+      for(let i = 3 ; i < 1000 ; i++){
+        if(!(i%3 || i%5)){
+          sum += i;
+        }
+      }
+      solution1.innerHTML = sum;
+    }
+
+    changeButtonStatus(button, solution1);
+  }
+
+  button.addEventListener("click", solve1);
+})
