@@ -3,8 +3,6 @@ module.exports = {
     output: {
         path: __dirname,
         filename: "bundle.js",
-        library: 'app',
-        libraryTarget: 'umd',
     },
     module: {
         loaders: [
