@@ -42,4 +42,5 @@ $(document).ready(function () {
     changeButtonStatus(button_solution8, solution8);
   }
   button_solution8.addEventListener("click", solve8)
+
 })

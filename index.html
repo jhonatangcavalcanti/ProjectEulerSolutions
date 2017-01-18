@@ -3,37 +3,49 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="bundle.js" charset="utf-8"></script>
     </head>
     <body>
-        <ul>
-          <li>
-            <a href="https://projecteuler.net/problem=1">1 - Multiples of 3 and 5</a>
-            <button id="button_solution1">Show</button>
-            <span id="solution1"> </span>
-          </li>
-          <li>
-            <a href="https://projecteuler.net/problem=8">8 - Largest product in a series</a>
-            <button id="button_solution8">Show</button>
-            <span id="solution8"> </span>
-          </li>
-          <li>
-            <a href="https://projecteuler.net/problem=10">10 - Summation of primes</a>
-            <button id="button_solution10">Show</button>
-            <span id="solution10"> </span>
-          </li>
-          <li>
-            <a href="https://projecteuler.net/problem=13">13 - Large sum</a>
-            <button id="button_solution13">Show</button>
-            <span id="solution13"> </span>
-          </li>
-          <li>
-            <a href="https://projecteuler.net/problem=14">14 - Longest Collatz sequence</a>
-            <button id="button_solution14">Show</button>
-            <span id="solution14"> </span>
-          </li>
-  			</ul>
+        <h3>Solutions of <a href="https://projecteuler.net">projecteuler.net</a> problems:</h3>
+        <table class="table">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Answer</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td class="id_column">01</td>
+            <td class="title_column"><a href="https://projecteuler.net/problem=1">Multiples of 3 and 5</a></td>
+            <td class="button_column"><button id="button_solution1" class="button">Show</button></td>
+            <td class="answer_column"><span id="solution1"></span></td>
+          </tr>
+          <tr>
+            <td>08</td>
+            <td class="title_column"><a href="https://projecteuler.net/problem=8">Largest product in a series</a></td>
+            <td><button id="button_solution8" class="button">Show</button></td>
+            <td><span id="solution8"></span></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td class="title_column"><a href="https://projecteuler.net/problem=10">Summation of primes</a></td>
+            <td><button id="button_solution10" class="button">Show</button></td>
+            <td><span id="solution10"></span></td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td class="title_column"><a href="https://projecteuler.net/problem=13">Large sum</a></td>
+            <td><button id="button_solution13" class="button" >Show</button></td>
+            <td><span id="solution13"></span></td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td class="title_column"><a href="https://projecteuler.net/problem=14">Longest Collatz sequence</a></td>
+            <td><button id="button_solution14" class="button">Show</button></td>
+            <td><span id="solution14"></span></td>
+          </tr>
+  			</table>
     </body>
 
 </html>

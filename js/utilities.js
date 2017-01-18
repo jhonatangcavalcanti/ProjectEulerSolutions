@@ -1,8 +1,8 @@
-export var changeButtonStatus = (button, el, value=0) => {
+export var changeButtonStatus = (button, el, value="") => {
   if(button.innerHTML == "Show"){
     button.innerHTML = "Hide";
     el.style.visibility = "visible";
-    if(value != 0){
+    if(value != ""){
       el.innerHTML = value;
     }
   }

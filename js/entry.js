@@ -1,5 +1,3 @@
-document.write("Links to solutions:")
-
 require("../css/style.css")
 require("./utilities")
 require("./solution1")
