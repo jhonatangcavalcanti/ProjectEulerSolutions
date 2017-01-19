@@ -21,15 +21,21 @@ $(document).ready(function () {
 
   var solve10 = () => {
     if(!sum){ // if not calculated yet
-      console.log("Calculating...");
-      for(let i = 2 ; i < 2000000 ; i++){
-        if(isPrime(i)){
-          sum += i;
+      console.log("Calculating...")
+      changeButtonStatus(button_solution10, solution10, "", "Running") // change status initialy to running
+      process.nextTick(() => {
+        for(let i = 2 ; i < 2000000 ; i++){
+        //debugger
+          if(isPrime(i)){
+            sum += i;
+          }
         }
-      }
-      console.log("Finished!");
+        console.log("Finished!");
+        changeButtonStatus(button_solution10, solution10, sum, "Show") // then, change status to Hide
+      })
     }
-    changeButtonStatus(button_solution10, solution10, sum)
+    //TODO: Better solution to fix status of the button
+    changeButtonStatus(button_solution10, solution10, sum, button_solution10.innerHTML)
   }
   button_solution10.addEventListener("click", solve10)
 })

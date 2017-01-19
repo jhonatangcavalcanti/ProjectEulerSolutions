@@ -26,22 +26,26 @@ var collatz_steps = (n) => {
 
 $(document).ready(function () {
   var solution14 = document.getElementById("solution14");
-  var button = document.getElementById("button_solution14");
+  var button_solution14 = document.getElementById("button_solution14");
 
   var solve14 = () => {
     if(!longest_chain){
       console.log("Calculating...")
-      for(let i = 1 ; i < 1000000 ; i++){
-        chain_size[i] = collatz_steps(i);
-        if(longest_chain < chain_size[i]){
-          longest_chain = Math.max(longest_chain, chain_size[i]);
-          number_longest_chain = i;
+      changeButtonStatus(button_solution14, solution14, "", "Running")
+      process.nextTick(() => {
+        for(let i = 1 ; i < 1000000 ; i++){
+          chain_size[i] = collatz_steps(i);
+          if(longest_chain < chain_size[i]){
+            longest_chain = Math.max(longest_chain, chain_size[i]);
+            number_longest_chain = i;
+          }
         }
-      }
-      console.log("Finished")
+        console.log("Finished")
+        changeButtonStatus(button_solution14, solution14, number_longest_chain, "Show");
+      })
     }
-    changeButtonStatus(button, solution14, number_longest_chain);
+    changeButtonStatus(button_solution14, solution14, number_longest_chain, button_solution14.innerHTML);
   }
-  button.addEventListener("click", solve14);
+  button_solution14.addEventListener("click", solve14);
 
 })

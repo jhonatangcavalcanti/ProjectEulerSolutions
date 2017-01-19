@@ -16,7 +16,7 @@ $(document).ready(function () {
       solution1.innerHTML = sum;
     }
 
-    changeButtonStatus(button, solution1);
+    changeButtonStatus(button, solution1, sum, button.innerHTML);
   }
 
   button.addEventListener("click", solve1);
