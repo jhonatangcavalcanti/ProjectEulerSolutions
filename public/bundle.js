@@ -51,8 +51,8 @@
 	__webpack_require__(6);
 	__webpack_require__(7);
 	__webpack_require__(8);
-	__webpack_require__(9);
 	__webpack_require__(10);
+	__webpack_require__(11);
 	//import {changeButtonStatus} from "./utilities"
 
 /***/ },
@@ -411,16 +411,30 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	/*
+	  el = where the value will be writed
+	  value = new value to write
+	  status = this is the new status of the button
+	*/
+
 	var changeButtonStatus = exports.changeButtonStatus = function changeButtonStatus(button, el) {
 	  var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+	  var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "Show";
 
-	  if (button.innerHTML == "Show") {
+	  //debugger
+	  if (status == "Running") {
+	    // Running -> Runnning
+	    //console.log("mudou")
+	    button.innerHTML = "Running";
+	  } else if (status == "Show") {
+	    // Show -> Hide
 	    button.innerHTML = "Hide";
 	    el.style.visibility = "visible";
 	    if (value != "") {
 	      el.innerHTML = value;
 	    }
 	  } else {
+	    // status == "Hide" // Hide -> Show
 	    button.innerHTML = "Show";
 	    el.style.visibility = "hidden";
 	  }
@@ -451,7 +465,7 @@
 	      solution1.innerHTML = sum;
 	    }
 
-	    (0, _utilities.changeButtonStatus)(button, solution1);
+	    (0, _utilities.changeButtonStatus)(button, solution1, sum, button.innerHTML);
 	  };
 
 	  button.addEventListener("click", solve1);
@@ -474,6 +488,7 @@
 	  var solve8 = function solve8() {
 	    if (!max_prod) {
 	      // if not calculated yet
+	      //changeButtonStatus(button_solution8, solution8, "Running");
 	      var grid = "73167176531330624919225119674426574742355349194934" + "96983520312774506326239578318016984801869478851843" + "85861560789112949495459501737958331952853208805511" + "12540698747158523863050715693290963295227443043557" + "66896648950445244523161731856403098711121722383113" + "62229893423380308135336276614282806444486645238749" + "30358907296290491560440772390713810515859307960866" + "70172427121883998797908792274921901699720888093776" + "65727333001053367881220235421809751254540594752243" + "52584907711670556013604839586446706324415722155397" + "53697817977846174064955149290862569321978468622482" + "83972241375657056057490261407972968652414535100474" + "82166370484403199890008895243450658541227588666881" + "16427171479924442928230863465674813919123162824586" + "17866458359124566529476545682848912883142607690042" + "24219022671055626321111109370544217506941658960408" + "07198403850962455444362981230987879927244284909188" + "84580156166097919133875499200524063689912560717606" + "05886116467109405077541002256983155200055935729725" + "71636269561882670428252483600823257530420752963450";
 
 	      for (var i = 0; i < grid.length; i++) {
@@ -486,7 +501,7 @@
 	      }
 	      solution8.innerHTML = max_prod;
 	    }
-	    (0, _utilities.changeButtonStatus)(button_solution8, solution8);
+	    (0, _utilities.changeButtonStatus)(button_solution8, solution8, max_prod, button_solution8.innerHTML);
 	  };
 	  button_solution8.addEventListener("click", solve8);
 	});
@@ -495,7 +510,7 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 
 	var _utilities = __webpack_require__(5);
 
@@ -522,20 +537,213 @@
 	    if (!sum) {
 	      // if not calculated yet
 	      console.log("Calculating...");
-	      for (var i = 2; i < 2000000; i++) {
-	        if (isPrime(i)) {
-	          sum += i;
+	      (0, _utilities.changeButtonStatus)(button_solution10, solution10, "", "Running"); // change status initialy to running
+	      process.nextTick(function () {
+	        for (var i = 2; i < 2000000; i++) {
+	          //debugger
+	          if (isPrime(i)) {
+	            sum += i;
+	          }
 	        }
-	      }
-	      console.log("Finished!");
+	        console.log("Finished!");
+	        (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum, "Show"); // then, change status to Hide
+	      });
 	    }
-	    (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum);
+	    //TODO: Better solution to fix status of the button
+	    (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum, button_solution10.innerHTML);
 	  };
 	  button_solution10.addEventListener("click", solve10);
 	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ },
 /* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	// shim for using process in browser
+	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout() {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	})();
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch (e) {
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch (e) {
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e) {
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e) {
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+	}
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = runTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while (len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    runClearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        runTimeout(drainQueue);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () {
+	    return '/';
+	};
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function () {
+	    return 0;
+	};
+
+/***/ },
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -558,10 +766,10 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 
 	var _utilities = __webpack_require__(5);
 
@@ -589,24 +797,29 @@
 
 	$(document).ready(function () {
 	  var solution14 = document.getElementById("solution14");
-	  var button = document.getElementById("button_solution14");
+	  var button_solution14 = document.getElementById("button_solution14");
 
 	  var solve14 = function solve14() {
 	    if (!longest_chain) {
 	      console.log("Calculating...");
-	      for (var i = 1; i < 1000000; i++) {
-	        chain_size[i] = collatz_steps(i);
-	        if (longest_chain < chain_size[i]) {
-	          longest_chain = Math.max(longest_chain, chain_size[i]);
-	          number_longest_chain = i;
+	      (0, _utilities.changeButtonStatus)(button_solution14, solution14, "", "Running");
+	      process.nextTick(function () {
+	        for (var i = 1; i < 1000000; i++) {
+	          chain_size[i] = collatz_steps(i);
+	          if (longest_chain < chain_size[i]) {
+	            longest_chain = Math.max(longest_chain, chain_size[i]);
+	            number_longest_chain = i;
+	          }
 	        }
-	      }
-	      console.log("Finished");
+	        console.log("Finished");
+	        (0, _utilities.changeButtonStatus)(button_solution14, solution14, number_longest_chain, "Show");
+	      });
 	    }
-	    (0, _utilities.changeButtonStatus)(button, solution14, number_longest_chain);
+	    (0, _utilities.changeButtonStatus)(button_solution14, solution14, number_longest_chain, button_solution14.innerHTML);
 	  };
-	  button.addEventListener("click", solve14);
+	  button_solution14.addEventListener("click", solve14);
 	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }
 /******/ ]);

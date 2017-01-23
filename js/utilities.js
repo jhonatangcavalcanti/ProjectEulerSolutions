@@ -1,8 +1,13 @@
+/*
+  el = where the value will be writed
+  value = new value to write
+  status = this is the new status of the button
+*/
+
 export var changeButtonStatus = function (button, el, value="", status="Show") {
   //debugger
-
   if(status == "Running"){ // Running -> Runnning
-    console.log("mudou")
+    //console.log("mudou")
     button.innerHTML = "Running";
   }
   else if(status == "Show"){ // Show -> Hide
