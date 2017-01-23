@@ -1,0 +1,58 @@
+
+h3{
+  text-align: center;
+  text-decoration: underline;
+  color: black;
+}
+
+h3{
+  a{
+    color: black;
+  }
+}
+
+a, a:visited{
+  color: blue;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%
+}
+
+td, th{
+  width: inherit;
+  text-align: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.title_column{
+  text-align: left;
+}
+
+tr:hover{
+  background-color: #ddd;
+}
+
+.id_column, .title_column, .button_column, .answer_column{
+  width: 25%
+}
+
+.button{
+  background-color: white;
+  border-radius: 8px;
+  padding: 6px 18px;
+  text-align: center;
+  margin: 4px 2px;
+}
+
+.button--state-hidden{
+  @extend .button;
+  color: red;
+}
+
+.button--state-show{
+  @extend .button;
+  color: black;
+}
