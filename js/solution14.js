@@ -46,6 +46,7 @@ $(document).ready(function () {
     }
     changeButtonStatus(button_solution14, solution14, number_longest_chain, button_solution14.innerHTML);
   }
+  
   button_solution14.addEventListener("click", solve14);
 
 })

@@ -1,13 +1,13 @@
-h3 {
+.tittle {
   text-align: center;
-  text-decoration: underline;
-  color: black; }
-
-h3 a {
   color: black; }
 
 a, a:visited {
   color: blue; }
+
+.link_black {
+  color: black;
+  text-decoration: none; }
 
 .table {
   border-collapse: collapse;
@@ -22,13 +22,13 @@ td, th {
 .title_column {
   text-align: left; }
 
-tr:hover {
+.tr_problem:hover {
   background-color: #ddd; }
 
 .id_column, .title_column, .button_column, .answer_column {
   width: 25%; }
 
-.button, .button--state-hidden, .button--state-show {
+.button, .button--state-hidden, .button--state-show, .button--state-running {
   background-color: white;
   border-radius: 8px;
   padding: 6px 18px;
@@ -40,3 +40,6 @@ tr:hover {
 
 .button--state-show {
   color: black; }
+
+.button--state-running {
+  color: gold; }

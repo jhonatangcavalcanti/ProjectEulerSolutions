@@ -1,4 +1,5 @@
 require("./../_style.scss")
+require("../css/style.css")
 require("./utilities")
 require("./solution1")
 require("./solution8")
