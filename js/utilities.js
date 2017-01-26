@@ -4,7 +4,7 @@
   status = this is the new status of the button
 */
 
-export var changeButtonStatus = function (button, el, value="", status="Show") {
+export var changeButtonStatus = (button, el, value="", status="Show") => {
   //debugger
   if(status == "Running"){ // Running -> Runnning
     //console.log("mudou")
