@@ -53,6 +53,7 @@
 	__webpack_require__(8);
 	__webpack_require__(10);
 	__webpack_require__(11);
+	__webpack_require__(12);
 	//import {changeButtonStatus} from "./utilities"
 
 /***/ },
@@ -537,6 +538,8 @@
 
 	var _utilities = __webpack_require__(5);
 
+	var _solverSolution = __webpack_require__(10);
+
 	// var jsdom = require('jsdom');
 
 	var sum = 0;
@@ -551,23 +554,18 @@
 	//
 	$(document).ready(function () {
 	  var button_solution10 = document.getElementById("button_solution10");
-	  var solution10 = document.getElementById("solution10");
+	  var text_solution10 = document.getElementById("solution10");
 
 	  var solve10 = function solve10() {
 	    if (!sum) {
 	      // if not calculated yet
-	      (0, _utilities.changeButtonStatus)(button_solution10, solution10, "", "Running"); // change status initialy to running
+	      (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, status = "Running"); // change status initialy to running
 	      process.nextTick(function () {
-	        for (var i = 2; i < 2000000; i++) {
-	          //debugger
-	          if ((0, _utilities.isPrime)(i)) {
-	            sum += i;
-	          }
-	        }
-	        (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum, "Show"); // then, change status to Hide
+	        sum = (0, _solverSolution.solution10)();
+	        (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, sum, "Show"); // then, change status to Hide
 	      });
 	    }
-	    (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum, button_solution10.innerHTML);
+	    (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, sum, button_solution10.innerHTML);
 	  };
 	  button_solution10.addEventListener("click", solve10);
 	});
@@ -768,6 +766,30 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.solution10 = undefined;
+
+	var _utilities = __webpack_require__(5);
+
+	var solution10 = exports.solution10 = function solution10() {
+	  var sum = 0;
+	  for (var i = 2; i < 2000000; i++) {
+	    //debugger
+	    if ((0, _utilities.isPrime)(i)) {
+	      sum += i;
+	    }
+	  }
+	  return sum;
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
 	                value: true
 	});
 	exports.solve13 = undefined;
@@ -785,7 +807,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
