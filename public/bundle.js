@@ -47,23 +47,56 @@
 	"use strict";
 
 	__webpack_require__(1);
-	__webpack_require__(3);
+	__webpack_require__(5);
 	__webpack_require__(6);
 	__webpack_require__(7);
 	__webpack_require__(8);
-	__webpack_require__(9);
+	__webpack_require__(10);
 	__webpack_require__(11);
-	__webpack_require__(12);
 	//import {changeButtonStatus} from "./utilities"
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// removed by extract-text-webpack-plugin
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(2);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
 
 /***/ },
 /* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".tittle {\n  text-align: center;\n  color: black; }\n\na, a:visited {\n  color: blue; }\n\n.link_black {\n  color: black;\n  text-decoration: none; }\n\n.table {\n  border-collapse: collapse;\n  width: 100%; }\n\ntd, th {\n  width: inherit;\n  text-align: center;\n  padding: 8px;\n  border-bottom: 1px solid #ddd; }\n\n.title_column {\n  text-align: left; }\n\n.tr_problem:hover {\n  background-color: #ddd; }\n\n.id_column, .title_column, .button_column, .answer_column {\n  width: 25%; }\n\n.button, .button--state-hidden, .button--state-show, .button--state-running {\n  background-color: white;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px; }\n\n.button--state-hidden {\n  color: red; }\n\n.button--state-show {\n  color: black; }\n\n.button--state-running {\n  color: gold; }\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 3 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -118,47 +151,7 @@
 	};
 
 /***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(4);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(5)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./style.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./style.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(2)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".tittle {\n  text-align: center;\n  color: black; }\n\na, a:visited {\n  color: blue; }\n\n.link_black {\n  color: black;\n  text-decoration: none; }\n\n.table {\n  border-collapse: collapse;\n  width: 100%; }\n\ntd, th {\n  width: inherit;\n  text-align: center;\n  padding: 8px;\n  border-bottom: 1px solid #ddd; }\n\n.title_column {\n  text-align: left; }\n\n.tr_problem:hover {\n  background-color: #ddd; }\n\n.id_column, .title_column, .button_column, .answer_column {\n  width: 25%; }\n\n.button, .button--state-hidden, .button--state-show, .button--state-running {\n  background-color: white;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px; }\n\n.button--state-hidden {\n  color: red; }\n\n.button--state-show {\n  color: black; }\n\n.button--state-running {\n  color: gold; }\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -410,7 +403,7 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -451,13 +444,32 @@
 	  }
 	};
 
+	/*
+
+	*/
+	var isPrime = exports.isPrime = function isPrime(number) {
+
+	  if (number % 2 == 0 && number != 2) {
+	    return false;
+	  }
+	  for (var i = 3; i < parseInt(Math.sqrt(number) + 2); i += 2) {
+	    if (number % i == 0) {
+	      return false;
+	    }
+	  }
+	  return true;
+	};
+
+	/*
+	*/
+
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _utilities = __webpack_require__(6);
+	var _utilities = __webpack_require__(5);
 
 	var sum = 0;
 
@@ -483,12 +495,12 @@
 	});
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var _utilities = __webpack_require__(6);
+	var _utilities = __webpack_require__(5);
 
 	$(document).ready(function () {
 	  var button_solution8 = document.getElementById("button_solution8");
@@ -518,28 +530,25 @@
 	});
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 
-	var _utilities = __webpack_require__(6);
+	var _utilities = __webpack_require__(5);
+
+	// var jsdom = require('jsdom');
 
 	var sum = 0;
 
-	var isPrime = function isPrime(number) {
-
-	  if (number % 2 == 0 && number != 2) {
-	    return 0;
-	  }
-	  for (var i = 3; i < parseInt(Math.sqrt(number) + 2); i += 2) {
-	    if (number % i == 0) {
-	      return 0;
-	    }
-	  }
-	  return 1;
-	};
-
+	// require("jsdom").env("", function(err, window) {
+	//     if (err) {
+	//         console.error(err);
+	//         return;
+	//     }
+	//
+	//     var $ = window.$;
+	//
 	$(document).ready(function () {
 	  var button_solution10 = document.getElementById("button_solution10");
 	  var solution10 = document.getElementById("solution10");
@@ -547,28 +556,27 @@
 	  var solve10 = function solve10() {
 	    if (!sum) {
 	      // if not calculated yet
-	      console.log("Calculating...");
 	      (0, _utilities.changeButtonStatus)(button_solution10, solution10, "", "Running"); // change status initialy to running
 	      process.nextTick(function () {
 	        for (var i = 2; i < 2000000; i++) {
 	          //debugger
-	          if (isPrime(i)) {
+	          if ((0, _utilities.isPrime)(i)) {
 	            sum += i;
 	          }
 	        }
-	        console.log("Finished!");
 	        (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum, "Show"); // then, change status to Hide
 	      });
 	    }
-	    //TODO: Better solution to fix status of the button
 	    (0, _utilities.changeButtonStatus)(button_solution10, solution10, sum, button_solution10.innerHTML);
 	  };
 	  button_solution10.addEventListener("click", solve10);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+	//
+	// });
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -754,7 +762,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -764,7 +772,7 @@
 	});
 	exports.solve13 = undefined;
 
-	var _utilities = __webpack_require__(6);
+	var _utilities = __webpack_require__(5);
 
 	var _utilities2 = _interopRequireDefault(_utilities);
 
@@ -777,12 +785,12 @@
 	};
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 
-	var _utilities = __webpack_require__(6);
+	var _utilities = __webpack_require__(5);
 
 	var longest_chain = 0;
 	var number_longest_chain = 0;
@@ -831,7 +839,7 @@
 
 	  button_solution14.addEventListener("click", solve14);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }
 /******/ ]);
