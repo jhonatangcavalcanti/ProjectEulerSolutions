@@ -47,5 +47,10 @@ describe("Utilities", () => {
       expect(button.innerHTML).toEqual("Hide");
     });
 
+    it("and from now on, should change status from hide to show or from show to hide", () => {
+      changeButtonStatus(button, solution, "", button.innerHTML); // no more need to send .. text
+      expect(button.innerHTML).toEqual("Show");
+    });
+
   })
 });
