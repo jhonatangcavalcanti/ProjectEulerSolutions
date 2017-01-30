@@ -417,7 +417,6 @@
 	  value = new value to write
 	  status = this is the new status of the button
 	*/
-
 	var changeButtonStatus = exports.changeButtonStatus = function changeButtonStatus(button, el) {
 	  var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
 	  var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "Show";
@@ -559,7 +558,7 @@
 	  var solve10 = function solve10() {
 	    if (!sum) {
 	      // if not calculated yet
-	      (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, status = "Running"); // change status initialy to running
+	      (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, "", "Running"); // change status initialy to running
 	      process.nextTick(function () {
 	        sum = (0, _solverSolution.solution10)();
 	        (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, sum, "Show"); // then, change status to Hide

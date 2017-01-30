@@ -3,7 +3,6 @@
   value = new value to write
   status = this is the new status of the button
 */
-
 export var changeButtonStatus = (button, el, value="", status="Show") => {
   //debugger
   if(status == "Running"){ // Running -> Runnning
