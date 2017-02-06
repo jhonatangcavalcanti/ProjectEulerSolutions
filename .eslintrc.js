@@ -5,7 +5,12 @@ module.exports = {
         "node": true
     },
     "globals": {
-        "__dirname": false
+        "__dirname": false,
+        "$": false,
+        "describe": false,
+        "it": false,
+        "expect": false,
+        "document": false
     },
     "extends": "eslint:recommended",
     "parserOptions": {
