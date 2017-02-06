@@ -1,9 +1,4 @@
 
-.tittle{
-  text-align: center;
-  color: black;
-}
-
 .table {
   border-collapse: collapse;
   width: 100%
@@ -18,6 +13,13 @@
 
 .tr_problem:hover{
   background-color: #ddd;
+}
+
+.table_title{
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-weight: bold;
 }
 
 .id_column, .title_column, .button_column, .answer_column{

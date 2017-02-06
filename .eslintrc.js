@@ -10,7 +10,8 @@ module.exports = {
         "describe": false,
         "it": false,
         "expect": false,
-        "document": false
+        "document": false,
+        "_": false
     },
     "extends": "eslint:recommended",
     "parserOptions": {

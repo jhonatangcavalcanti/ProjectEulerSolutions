@@ -1,4 +1,5 @@
 require('./../scss/style.scss')
+require('./problemTemplate')
 require('./solution1')
 require('./solution8')
 require('./solution10')

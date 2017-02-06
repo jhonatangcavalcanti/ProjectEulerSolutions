@@ -1,8 +1,12 @@
 import {changeButtonStatus} from './utilities'
 import {solveProblem10} from './solvers/solverSolution10'
+import {addSolution} from './problemTemplate'
 
 $(document).ready(() => {
   let ans = 0
+
+  addSolution(10, 'Summation of primes') // Add the row of solution to the page
+
   let text_solution10 = document.getElementById('solution10')
   let button_solution10 = document.getElementById('button_solution10')
 

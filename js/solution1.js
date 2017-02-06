@@ -1,20 +1,23 @@
 import {changeButtonStatus} from './utilities'
 import {solveProblem1} from './solvers/solverSolution1'
+import {addSolution} from './problemTemplate'
 
 $(document).ready(() => {
   let ans = 0
-  let text_solution1 = document.getElementById('solution1')
-  let button_solution1 = document.getElementById('button_solution1')
+
+  let items = addSolution('1', 'Multiples of 3 and 5') // add the row of solution to the page
+  let text_solution = items['text_solution']
+  let button_solution = items['button_solution']
 
   let solve1 = () => {
     if (!ans) { // if not calculted yet
-      changeButtonStatus(button_solution1, text_solution1, '', 'Running') // change status initialy to running
+      changeButtonStatus(button_solution, text_solution, '', 'Running') // change status initialy to running
       process.nextTick(() => {
         ans = solveProblem1()
-        changeButtonStatus(button_solution1, text_solution1, ans, 'Show') // then, change status to Hide
+        changeButtonStatus(button_solution, text_solution, ans, 'Show') // then, change status to Hide
       })
     }
-    changeButtonStatus(button_solution1, text_solution1, ans, button_solution1.innerHTML)
+    changeButtonStatus(button_solution, text_solution, ans, button_solution.innerHTML) // works only when nextTick ends
   }
-  button_solution1.addEventListener('click', solve1)
+  button_solution.addEventListener('click', solve1)
 })
