@@ -44,17 +44,14 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	__webpack_require__(1);
 	__webpack_require__(5);
-	__webpack_require__(6);
-	__webpack_require__(7);
-	__webpack_require__(8);
-	__webpack_require__(10);
+	__webpack_require__(9);
 	__webpack_require__(11);
-	__webpack_require__(12);
-	//import {changeButtonStatus} from "./utilities"
+	__webpack_require__(13);
+	__webpack_require__(14);
 
 /***/ },
 /* 1 */
@@ -72,8 +69,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.scss", function() {
-				var newContent = require("!!./node_modules/css-loader/index.js!./node_modules/sass-loader/index.js!./style.scss");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -91,7 +88,7 @@
 
 
 	// module
-	exports.push([module.id, ".tittle {\n  text-align: center;\n  color: black; }\n\na, a:visited {\n  color: blue; }\n\n.link_black {\n  color: black;\n  text-decoration: none; }\n\n.table {\n  border-collapse: collapse;\n  width: 100%; }\n\ntd, th {\n  width: inherit;\n  text-align: center;\n  padding: 8px;\n  border-bottom: 1px solid #ddd; }\n\n.title_column {\n  text-align: left; }\n\n.tr_problem:hover {\n  background-color: #ddd; }\n\n.id_column, .title_column, .button_column, .answer_column {\n  width: 25%; }\n\n.button, .button--state-hidden, .button--state-show, .button--state-running {\n  background-color: white;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px; }\n\n.button--state-hidden {\n  color: red; }\n\n.button--state-show {\n  color: black; }\n\n.button--state-running {\n  color: gold; }\n", ""]);
+	exports.push([module.id, ".tittle {\n  text-align: center;\n  color: black; }\n\na, a:visited {\n  color: blue; }\n\n.link_black {\n  color: black;\n  text-decoration: none; }\n\n.table {\n  border-collapse: collapse;\n  width: 100%; }\n\n.title_column {\n  text-align: left; }\n\n.tr_problem:hover {\n  background-color: #ddd; }\n\n.id_column, .title_column, .button_column, .answer_column {\n  width: 25%; }\n\n.button, .button--state-hidden, .button--state-show, .button--state-running {\n  background-color: white;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px; }\n\n.button--state-hidden {\n  color: red; }\n\n.button--state-show {\n  color: black; }\n\n.button--state-running {\n  color: gold; }\n", ""]);
 
 	// exports
 
@@ -405,175 +402,36 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/*
-	  el = where the value will be writed
-	  value = new value to write
-	  status = this is the new status of the button
-	*/
-	var changeButtonStatus = exports.changeButtonStatus = function changeButtonStatus(button, el) {
-	  var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
-	  var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "Show";
+	var _utilities = __webpack_require__(7);
 
-	  //debugger
-	  if (status == "Running") {
-	    // Running -> Runnning
-	    //console.log("mudou")
-	    button.innerHTML = "Running";
-	    button.className = 'button--state-running';
-	  } else if (status == "Show") {
-	    // Show -> Hide
-	    button.innerHTML = "Hide";
-	    el.style.visibility = "visible";
-	    button.className = 'button--state-hidden';
-	    el.innerHTML = value;
-	    /*if(value != ""){
-	      el.innerHTML = value;
-	    }*/
-	  } else {
-	    // status == "Hide" // Hide -> Show
-	    button.innerHTML = "Show";
-	    button.className = 'button--state-show';
-	    el.style.visibility = "hidden";
-	  }
-	};
+	var _solverSolution = __webpack_require__(8);
 
-	/*
+	$(document).ready(function () {
+	  var ans = 0;
+	  var text_solution1 = document.getElementById('solution1');
+	  var button_solution1 = document.getElementById('button_solution1');
 
-	*/
-	var isPrime = exports.isPrime = function isPrime(number) {
-
-	  if (number % 2 == 0 && number != 2) {
-	    return false;
-	  }
-	  for (var i = 3; i < parseInt(Math.sqrt(number) + 2); i += 2) {
-	    if (number % i == 0) {
-	      return false;
+	  var solve1 = function solve1() {
+	    if (!ans) {
+	      // if not calculted yet
+	      (0, _utilities.changeButtonStatus)(button_solution1, text_solution1, '', 'Running'); // change status initialy to running
+	      process.nextTick(function () {
+	        ans = (0, _solverSolution.solveProblem1)();
+	        (0, _utilities.changeButtonStatus)(button_solution1, text_solution1, ans, 'Show'); // then, change status to Hide
+	      });
 	    }
-	  }
-	  return true;
-	};
-
-	/*
-	*/
+	    (0, _utilities.changeButtonStatus)(button_solution1, text_solution1, ans, button_solution1.innerHTML);
+	  };
+	  button_solution1.addEventListener('click', solve1);
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _utilities = __webpack_require__(5);
-
-	var sum = 0;
-
-	$(document).ready(function () {
-	  var solution1 = document.getElementById("solution1");
-	  var button = document.getElementById("button_solution1");
-
-	  var solve1 = function solve1() {
-	    if (!sum) {
-	      // if not calculted yet
-	      for (var i = 3; i < 1000; i++) {
-	        if (!(i % 3 || i % 5)) {
-	          sum += i;
-	        }
-	      }
-	      solution1.innerHTML = sum;
-	    }
-
-	    (0, _utilities.changeButtonStatus)(button, solution1, sum, button.innerHTML);
-	  };
-
-	  button.addEventListener("click", solve1);
-	});
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _utilities = __webpack_require__(5);
-
-	$(document).ready(function () {
-	  var button_solution8 = document.getElementById("button_solution8");
-	  var solution8 = document.getElementById("solution8");
-
-	  var max_prod = 0;
-
-	  var solve8 = function solve8() {
-	    if (!max_prod) {
-	      // if not calculated yet
-	      //changeButtonStatus(button_solution8, solution8, "Running");
-	      var grid = "73167176531330624919225119674426574742355349194934" + "96983520312774506326239578318016984801869478851843" + "85861560789112949495459501737958331952853208805511" + "12540698747158523863050715693290963295227443043557" + "66896648950445244523161731856403098711121722383113" + "62229893423380308135336276614282806444486645238749" + "30358907296290491560440772390713810515859307960866" + "70172427121883998797908792274921901699720888093776" + "65727333001053367881220235421809751254540594752243" + "52584907711670556013604839586446706324415722155397" + "53697817977846174064955149290862569321978468622482" + "83972241375657056057490261407972968652414535100474" + "82166370484403199890008895243450658541227588666881" + "16427171479924442928230863465674813919123162824586" + "17866458359124566529476545682848912883142607690042" + "24219022671055626321111109370544217506941658960408" + "07198403850962455444362981230987879927244284909188" + "84580156166097919133875499200524063689912560717606" + "05886116467109405077541002256983155200055935729725" + "71636269561882670428252483600823257530420752963450";
-
-	      for (var i = 0; i < grid.length; i++) {
-	        var prod = 1;
-	        for (var j = 0; j < 13 && i + j < grid.length; j++) {
-	          prod *= grid[i + j];
-	          if (!prod) break;
-	        }
-	        max_prod = Math.max(max_prod, prod);
-	      }
-	      solution8.innerHTML = max_prod;
-	    }
-	    (0, _utilities.changeButtonStatus)(button_solution8, solution8, max_prod, button_solution8.innerHTML);
-	  };
-	  button_solution8.addEventListener("click", solve8);
-	});
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
-
-	var _utilities = __webpack_require__(5);
-
-	var _solverSolution = __webpack_require__(10);
-
-	// var jsdom = require('jsdom');
-
-	var sum = 0;
-
-	// require("jsdom").env("", function(err, window) {
-	//     if (err) {
-	//         console.error(err);
-	//         return;
-	//     }
-	//
-	//     var $ = window.$;
-	//
-	$(document).ready(function () {
-	  var button_solution10 = document.getElementById("button_solution10");
-	  var text_solution10 = document.getElementById("solution10");
-
-	  var solve10 = function solve10() {
-	    if (!sum) {
-	      // if not calculated yet
-	      (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, "", "Running"); // change status initialy to running
-	      process.nextTick(function () {
-	        sum = (0, _solverSolution.solution10)();
-	        (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, sum, "Show"); // then, change status to Hide
-	      });
-	    }
-	    (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, sum, button_solution10.innerHTML);
-	  };
-	  button_solution10.addEventListener("click", solve10);
-	});
-	//
-	// });
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
-
-/***/ },
-/* 9 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -759,19 +617,178 @@
 	};
 
 /***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
+/* 7 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/*
+	  el = where the value will be writed
+	  value = new value to write
+	  status = this is the new status of the button
+	*/
+	var changeButtonStatus = exports.changeButtonStatus = function changeButtonStatus(button, el) {
+	  var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+	  var status = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'Show';
+
+	  //debugger
+	  if (status == 'Running') {
+	    // Running -> Runnning
+	    button.innerHTML = 'Running';
+	    button.className = 'button--state-running';
+	  } else if (status == 'Show') {
+	    // Show -> Hide (Show only changes to Hide after Running)
+	    button.innerHTML = 'Hide';
+	    el.style.visibility = 'visible';
+	    button.className = 'button--state-hidden';
+	    el.innerHTML = value;
+	  } else {
+	    // status == "Hide" // Hide -> Show (Hide only changes to show)
+	    button.innerHTML = 'Show';
+	    button.className = 'button--state-show';
+	    el.style.visibility = 'hidden';
+	  }
+	};
+
+	/*
+
+	*/
+	var isPrime = exports.isPrime = function isPrime(number) {
+
+	  if (number % 2 == 0 && number != 2) {
+	    return false;
+	  }
+	  for (var i = 3; i < parseInt(Math.sqrt(number) + 2); i += 2) {
+	    if (number % i == 0) {
+	      return false;
+	    }
+	  }
+	  return true;
+	};
+
+	/*
+	*/
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
 
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.solution10 = undefined;
+	var solveProblem1 = exports.solveProblem1 = function solveProblem1() {
+	  var sum = 0;
+	  for (var i = 3; i < 1000; i++) {
+	    if (!(i % 3 || i % 5)) {
+	      sum += i;
+	    }
+	  }
+	  return sum;
+	};
 
-	var _utilities = __webpack_require__(5);
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
 
-	var solution10 = exports.solution10 = function solution10() {
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var _utilities = __webpack_require__(7);
+
+	var _solverSolution = __webpack_require__(10);
+
+	$(document).ready(function () {
+	  var ans = 0;
+	  var text_solution8 = document.getElementById('solution8');
+	  var button_solution8 = document.getElementById('button_solution8');
+
+	  var solve8 = function solve8() {
+	    if (!ans) {
+	      // if not calculated yet
+	      (0, _utilities.changeButtonStatus)(button_solution8, text_solution8, '', 'Running'); // change status initialy to running
+	      process.nextTick(function () {
+	        ans = (0, _solverSolution.solveProblem8)();
+	        (0, _utilities.changeButtonStatus)(button_solution8, text_solution8, ans, 'Show'); // then, change status to Hide
+	      });
+	    }
+	    (0, _utilities.changeButtonStatus)(button_solution8, text_solution8, ans, button_solution8.innerHTML);
+	  };
+	  button_solution8.addEventListener('click', solve8);
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var solveProblem8 = exports.solveProblem8 = function solveProblem8() {
+	  var max_prod = 0,
+	      grid = '73167176531330624919225119674426574742355349194934' + '96983520312774506326239578318016984801869478851843' + '85861560789112949495459501737958331952853208805511' + '12540698747158523863050715693290963295227443043557' + '66896648950445244523161731856403098711121722383113' + '62229893423380308135336276614282806444486645238749' + '30358907296290491560440772390713810515859307960866' + '70172427121883998797908792274921901699720888093776' + '65727333001053367881220235421809751254540594752243' + '52584907711670556013604839586446706324415722155397' + '53697817977846174064955149290862569321978468622482' + '83972241375657056057490261407972968652414535100474' + '82166370484403199890008895243450658541227588666881' + '16427171479924442928230863465674813919123162824586' + '17866458359124566529476545682848912883142607690042' + '24219022671055626321111109370544217506941658960408' + '07198403850962455444362981230987879927244284909188' + '84580156166097919133875499200524063689912560717606' + '05886116467109405077541002256983155200055935729725' + '71636269561882670428252483600823257530420752963450';
+
+	  for (var i = 0; i < grid.length; i++) {
+	    var prod = 1;
+	    for (var j = 0; j < 13 && i + j < grid.length; j++) {
+	      prod *= grid[i + j];
+	      if (!prod) break;
+	    }
+	    max_prod = Math.max(max_prod, prod);
+	  }
+	  return max_prod;
+	};
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var _utilities = __webpack_require__(7);
+
+	var _solverSolution = __webpack_require__(12);
+
+	$(document).ready(function () {
+	  var ans = 0;
+	  var text_solution10 = document.getElementById('solution10');
+	  var button_solution10 = document.getElementById('button_solution10');
+
+	  var solve10 = function solve10() {
+	    if (!ans) {
+	      // if not calculated yet
+	      (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, '', 'Running'); // change status initialy to running
+	      process.nextTick(function () {
+	        ans = (0, _solverSolution.solveProblem10)();
+	        (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, ans, 'Show'); // then, change status to Hide
+	      });
+	    }
+	    (0, _utilities.changeButtonStatus)(button_solution10, text_solution10, ans, button_solution10.innerHTML);
+	  };
+	  button_solution10.addEventListener('click', solve10);
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.solveProblem10 = undefined;
+
+	var _utilities = __webpack_require__(7);
+
+	var solveProblem10 = exports.solveProblem10 = function solveProblem10() {
 	  var sum = 0;
 	  for (var i = 2; i < 2000000; i++) {
 	    //debugger
@@ -783,36 +800,155 @@
 	};
 
 /***/ },
-/* 11 */
+/* 13 */
+/***/ function(module, exports) {
+
+	// import changeButtonStatus from './utilities'
+	//
+	// export var solve13 = () => {
+	//   let numbers =  `37107287533902102798797998220837590246510135740250
+	//                   46376937677490009712648124896970078050417018260538
+	//                   74324986199524741059474233309513058123726617309629
+	//                   91942213363574161572522430563301811072406154908250
+	//                   23067588207539346171171980310421047513778063246676
+	//                   89261670696623633820136378418383684178734361726757
+	//                   28112879812849979408065481931592621691275889832738
+	//                   44274228917432520321923589422876796487670272189318
+	//                   47451445736001306439091167216856844588711603153276
+	//                   70386486105843025439939619828917593665686757934951
+	//                   62176457141856560629502157223196586755079324193331
+	//                   64906352462741904929101432445813822663347944758178
+	//                   92575867718337217661963751590579239728245598838407
+	//                   58203565325359399008402633568948830189458628227828
+	//                   80181199384826282014278194139940567587151170094390
+	//                   35398664372827112653829987240784473053190104293586
+	//                   86515506006295864861532075273371959191420517255829
+	//                   71693888707715466499115593487603532921714970056938
+	//                   54370070576826684624621495650076471787294438377604
+	//                   53282654108756828443191190634694037855217779295145
+	//                   36123272525000296071075082563815656710885258350721
+	//                   45876576172410976447339110607218265236877223636045
+	//                   17423706905851860660448207621209813287860733969412
+	//                   81142660418086830619328460811191061556940512689692
+	//                   51934325451728388641918047049293215058642563049483
+	//                   62467221648435076201727918039944693004732956340691
+	//                   15732444386908125794514089057706229429197107928209
+	//                   55037687525678773091862540744969844508330393682126
+	//                   18336384825330154686196124348767681297534375946515
+	//                   80386287592878490201521685554828717201219257766954
+	//                   78182833757993103614740356856449095527097864797581
+	//                   16726320100436897842553539920931837441497806860984
+	//                   48403098129077791799088218795327364475675590848030
+	//                   87086987551392711854517078544161852424320693150332
+	//                   59959406895756536782107074926966537676326235447210
+	//                   69793950679652694742597709739166693763042633987085
+	//                   41052684708299085211399427365734116182760315001271
+	//                   65378607361501080857009149939512557028198746004375
+	//                   35829035317434717326932123578154982629742552737307
+	//                   94953759765105305946966067683156574377167401875275
+	//                   88902802571733229619176668713819931811048770190271
+	//                   25267680276078003013678680992525463401061632866526
+	//                   36270218540497705585629946580636237993140746255962
+	//                   24074486908231174977792365466257246923322810917141
+	//                   91430288197103288597806669760892938638285025333403
+	//                   34413065578016127815921815005561868836468420090470
+	//                   23053081172816430487623791969842487255036638784583
+	//                   11487696932154902810424020138335124462181441773470
+	//                   63783299490636259666498587618221225225512486764533
+	//                   67720186971698544312419572409913959008952310058822
+	//                   95548255300263520781532296796249481641953868218774
+	//                   76085327132285723110424803456124867697064507995236
+	//                   37774242535411291684276865538926205024910326572967
+	//                   23701913275725675285653248258265463092207058596522
+	//                   29798860272258331913126375147341994889534765745501
+	//                   18495701454879288984856827726077713721403798879715
+	//                   38298203783031473527721580348144513491373226651381
+	//                   34829543829199918180278916522431027392251122869539
+	//                   40957953066405232632538044100059654939159879593635
+	//                   29746152185502371307642255121183693803580388584903
+	//                   41698116222072977186158236678424689157993532961922
+	//                   62467957194401269043877107275048102390895523597457
+	//                   23189706772547915061505504953922979530901129967519
+	//                   86188088225875314529584099251203829009407770775672
+	//                   11306739708304724483816533873502340845647058077308
+	//                   82959174767140363198008187129011875491310547126581
+	//                   97623331044818386269515456334926366572897563400500
+	//                   42846280183517070527831839425882145521227251250327
+	//                   55121603546981200581762165212827652751691296897789
+	//                   32238195734329339946437501907836945765883352399886
+	//                   75506164965184775180738168837861091527357929701337
+	//                   62177842752192623401942399639168044983993173312731
+	//                   32924185707147349566916674687634660915035914677504
+	//                   99518671430235219628894890102423325116913619626622
+	//                   73267460800591547471830798392868535206946944540724
+	//                   76841822524674417161514036427982273348055556214818
+	//                   97142617910342598647204516893989422179826088076852
+	//                   87783646182799346313767754307809363333018982642090
+	//                   10848802521674670883215120185883543223812876952786
+	//                   71329612474782464538636993009049310363619763878039
+	//                   62184073572399794223406235393808339651327408011116
+	//                   66627891981488087797941876876144230030984490851411
+	//                   60661826293682836764744779239180335110989069790714
+	//                   85786944089552990653640447425576083659976645795096
+	//                   66024396409905389607120198219976047599490197230297
+	//                   64913982680032973156037120041377903785566085089252
+	//                   16730939319872750275468906903707539413042652315011
+	//                   94809377245048795150954100921645863754710598436791
+	//                   78639167021187492431995700641917969777599028300699
+	//                   15368713711936614952811305876380278410754449733078
+	//                   40789923115535562561142322423255033685442488917353
+	//                   44889911501440648020369068063960672322193204149535
+	//                   41503128880339536053299340368006977710650566631954
+	//                   81234880673210146739058568557934581403627822703280
+	//                   82616570773948327592232845941706525094512325230608
+	//                   22918802058777319719839450180888072429661980811197
+	//                   77158542502016545090413245809786882778948721859617
+	//                   72107838435069186155435662884062257473692284509516
+	//                   20849603980134001723930671666823555245252804609722
+	//                   53503534226472524250874054075591789781264330331690`
+	//
+	//   //console.log(numbers[0]);
+	// }
+	"use strict";
+
+/***/ },
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	var _utilities = __webpack_require__(7);
+
+	var _solverSolution = __webpack_require__(15);
+
+	$(document).ready(function () {
+	  var ans = 0;
+	  var text_solution14 = document.getElementById('solution14');
+	  var button_solution14 = document.getElementById('button_solution14');
+
+	  var solve14 = function solve14() {
+	    if (!ans) {
+	      (0, _utilities.changeButtonStatus)(button_solution14, text_solution14, '', 'Running');
+	      process.nextTick(function () {
+	        ans = (0, _solverSolution.solveProblem14)();
+	        (0, _utilities.changeButtonStatus)(button_solution14, text_solution14, ans, 'Show');
+	      });
+	    }
+	    (0, _utilities.changeButtonStatus)(button_solution14, text_solution14, ans, button_solution14.innerHTML);
+	  };
+	  button_solution14.addEventListener('click', solve14);
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
 
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	                value: true
+	  value: true
 	});
-	exports.solve13 = undefined;
-
-	var _utilities = __webpack_require__(5);
-
-	var _utilities2 = _interopRequireDefault(_utilities);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var solve13 = exports.solve13 = function solve13() {
-	                var numbers = "37107287533902102798797998220837590246510135740250\n                  46376937677490009712648124896970078050417018260538\n                  74324986199524741059474233309513058123726617309629\n                  91942213363574161572522430563301811072406154908250\n                  23067588207539346171171980310421047513778063246676\n                  89261670696623633820136378418383684178734361726757\n                  28112879812849979408065481931592621691275889832738\n                  44274228917432520321923589422876796487670272189318\n                  47451445736001306439091167216856844588711603153276\n                  70386486105843025439939619828917593665686757934951\n                  62176457141856560629502157223196586755079324193331\n                  64906352462741904929101432445813822663347944758178\n                  92575867718337217661963751590579239728245598838407\n                  58203565325359399008402633568948830189458628227828\n                  80181199384826282014278194139940567587151170094390\n                  35398664372827112653829987240784473053190104293586\n                  86515506006295864861532075273371959191420517255829\n                  71693888707715466499115593487603532921714970056938\n                  54370070576826684624621495650076471787294438377604\n                  53282654108756828443191190634694037855217779295145\n                  36123272525000296071075082563815656710885258350721\n                  45876576172410976447339110607218265236877223636045\n                  17423706905851860660448207621209813287860733969412\n                  81142660418086830619328460811191061556940512689692\n                  51934325451728388641918047049293215058642563049483\n                  62467221648435076201727918039944693004732956340691\n                  15732444386908125794514089057706229429197107928209\n                  55037687525678773091862540744969844508330393682126\n                  18336384825330154686196124348767681297534375946515\n                  80386287592878490201521685554828717201219257766954\n                  78182833757993103614740356856449095527097864797581\n                  16726320100436897842553539920931837441497806860984\n                  48403098129077791799088218795327364475675590848030\n                  87086987551392711854517078544161852424320693150332\n                  59959406895756536782107074926966537676326235447210\n                  69793950679652694742597709739166693763042633987085\n                  41052684708299085211399427365734116182760315001271\n                  65378607361501080857009149939512557028198746004375\n                  35829035317434717326932123578154982629742552737307\n                  94953759765105305946966067683156574377167401875275\n                  88902802571733229619176668713819931811048770190271\n                  25267680276078003013678680992525463401061632866526\n                  36270218540497705585629946580636237993140746255962\n                  24074486908231174977792365466257246923322810917141\n                  91430288197103288597806669760892938638285025333403\n                  34413065578016127815921815005561868836468420090470\n                  23053081172816430487623791969842487255036638784583\n                  11487696932154902810424020138335124462181441773470\n                  63783299490636259666498587618221225225512486764533\n                  67720186971698544312419572409913959008952310058822\n                  95548255300263520781532296796249481641953868218774\n                  76085327132285723110424803456124867697064507995236\n                  37774242535411291684276865538926205024910326572967\n                  23701913275725675285653248258265463092207058596522\n                  29798860272258331913126375147341994889534765745501\n                  18495701454879288984856827726077713721403798879715\n                  38298203783031473527721580348144513491373226651381\n                  34829543829199918180278916522431027392251122869539\n                  40957953066405232632538044100059654939159879593635\n                  29746152185502371307642255121183693803580388584903\n                  41698116222072977186158236678424689157993532961922\n                  62467957194401269043877107275048102390895523597457\n                  23189706772547915061505504953922979530901129967519\n                  86188088225875314529584099251203829009407770775672\n                  11306739708304724483816533873502340845647058077308\n                  82959174767140363198008187129011875491310547126581\n                  97623331044818386269515456334926366572897563400500\n                  42846280183517070527831839425882145521227251250327\n                  55121603546981200581762165212827652751691296897789\n                  32238195734329339946437501907836945765883352399886\n                  75506164965184775180738168837861091527357929701337\n                  62177842752192623401942399639168044983993173312731\n                  32924185707147349566916674687634660915035914677504\n                  99518671430235219628894890102423325116913619626622\n                  73267460800591547471830798392868535206946944540724\n                  76841822524674417161514036427982273348055556214818\n                  97142617910342598647204516893989422179826088076852\n                  87783646182799346313767754307809363333018982642090\n                  10848802521674670883215120185883543223812876952786\n                  71329612474782464538636993009049310363619763878039\n                  62184073572399794223406235393808339651327408011116\n                  66627891981488087797941876876144230030984490851411\n                  60661826293682836764744779239180335110989069790714\n                  85786944089552990653640447425576083659976645795096\n                  66024396409905389607120198219976047599490197230297\n                  64913982680032973156037120041377903785566085089252\n                  16730939319872750275468906903707539413042652315011\n                  94809377245048795150954100921645863754710598436791\n                  78639167021187492431995700641917969777599028300699\n                  15368713711936614952811305876380278410754449733078\n                  40789923115535562561142322423255033685442488917353\n                  44889911501440648020369068063960672322193204149535\n                  41503128880339536053299340368006977710650566631954\n                  81234880673210146739058568557934581403627822703280\n                  82616570773948327592232845941706525094512325230608\n                  22918802058777319719839450180888072429661980811197\n                  77158542502016545090413245809786882778948721859617\n                  72107838435069186155435662884062257473692284509516\n                  20849603980134001723930671666823555245252804609722\n                  53503534226472524250874054075591789781264330331690";
-
-	                //console.log(numbers[0]);
-	};
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
-
-	var _utilities = __webpack_require__(5);
-
 	var longest_chain = 0;
 	var number_longest_chain = 0;
 	var chain_size = [];
@@ -835,32 +971,16 @@
 	  return steps;
 	};
 
-	$(document).ready(function () {
-	  var solution14 = document.getElementById("solution14");
-	  var button_solution14 = document.getElementById("button_solution14");
-
-	  var solve14 = function solve14() {
-	    if (!longest_chain) {
-	      console.log("Calculating...");
-	      (0, _utilities.changeButtonStatus)(button_solution14, solution14, "", "Running");
-	      process.nextTick(function () {
-	        for (var i = 1; i < 1000000; i++) {
-	          chain_size[i] = collatz_steps(i);
-	          if (longest_chain < chain_size[i]) {
-	            longest_chain = Math.max(longest_chain, chain_size[i]);
-	            number_longest_chain = i;
-	          }
-	        }
-	        console.log("Finished");
-	        (0, _utilities.changeButtonStatus)(button_solution14, solution14, number_longest_chain, "Show");
-	      });
+	var solveProblem14 = exports.solveProblem14 = function solveProblem14() {
+	  for (var i = 1; i < 1000000; i++) {
+	    chain_size[i] = collatz_steps(i);
+	    if (longest_chain < chain_size[i]) {
+	      longest_chain = Math.max(longest_chain, chain_size[i]);
+	      number_longest_chain = i;
 	    }
-	    (0, _utilities.changeButtonStatus)(button_solution14, solution14, number_longest_chain, button_solution14.innerHTML);
-	  };
-
-	  button_solution14.addEventListener("click", solve14);
-	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+	  }
+	  return number_longest_chain;
+	};
 
 /***/ }
 /******/ ]);
