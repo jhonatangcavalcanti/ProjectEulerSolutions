@@ -1,6 +1,6 @@
-import {changeButtonStatus, isPrime} from "../../js/utilities"
+import {changeButtonStatus, isPrime} from '../../js/utilities'
 
-describe("Utilities", () => {
+describe('Utilities', () => {
   //var sol_10 = require("../../js/solution10");
 
   it("should verify if prime test is working", () => {

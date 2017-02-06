@@ -1,12 +1,12 @@
-import {isPrime} from "./utilities";
+import {isPrime} from './utilities'
 
-export var solution10 = () => {
-  var sum = 0;
-  for(let i = 2 ; i < 2000000 ; i++){
+export let solution10 = () => {
+  let sum = 0
+  for (let i = 2 ; i < 2000000 ; i++) {
   //debugger
-    if(isPrime(i)){
-      sum += i;
+    if (isPrime(i)) {
+      sum += i
     }
   }
-  return sum;
+  return sum
 }

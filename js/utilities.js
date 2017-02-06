@@ -3,43 +3,41 @@
   value = new value to write
   status = this is the new status of the button
 */
-export var changeButtonStatus = (button, el, value="", status="Show") => {
+export let changeButtonStatus = (button, el, value='', status='Show') => {
   //debugger
-  if(status == "Running"){ // Running -> Runnning
+  if (status == 'Running') { // Running -> Runnning
     //console.log("mudou")
-    button.innerHTML = "Running";
-    button.className = 'button--state-running';
-  }
-  else if(status == "Show"){ // Show -> Hide
-    button.innerHTML = "Hide";
-    el.style.visibility = "visible";
-    button.className = 'button--state-hidden';
-    el.innerHTML = value;
+    button.innerHTML = 'Running'
+    button.className = 'button--state-running'
+  }  else if (status == 'Show') { // Show -> Hide
+    button.innerHTML = 'Hide'
+    el.style.visibility = 'visible'
+    button.className = 'button--state-hidden'
+    el.innerHTML = value
     /*if(value != ""){
       el.innerHTML = value;
     }*/
+  }  else { // status == "Hide" // Hide -> Show
+    button.innerHTML = 'Show'
+    button.className = 'button--state-show'
+    el.style.visibility = 'hidden'
   }
-  else{ // status == "Hide" // Hide -> Show
-    button.innerHTML = "Show";
-    button.className = 'button--state-show';
-    el.style.visibility = "hidden";
-  }
-};
+}
 
 /*
 
 */
-export var isPrime = (number) => {
+export let isPrime = (number) => {
 
-  if(number%2 == 0 && number != 2){
-    return false;
+  if (number%2 == 0 && number != 2) {
+    return false
   }
-  for(let i = 3 ; i < parseInt(Math.sqrt(number)+2) ; i+=2){
-    if(number%i == 0){
-      return false;
+  for (let i = 3 ; i < parseInt(Math.sqrt(number)+2) ; i+=2) {
+    if (number%i == 0) {
+      return false
     }
   }
-  return true;
+  return true
 }
 
 /*
