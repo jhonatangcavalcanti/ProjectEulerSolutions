@@ -6,18 +6,14 @@
 export let changeButtonStatus = (button, el, value='', status='Show') => {
   //debugger
   if (status == 'Running') { // Running -> Runnning
-    //console.log("mudou")
     button.innerHTML = 'Running'
     button.className = 'button--state-running'
-  }  else if (status == 'Show') { // Show -> Hide
+  }  else if (status == 'Show') { // Show -> Hide (Show only changes to Hide after Running)
     button.innerHTML = 'Hide'
     el.style.visibility = 'visible'
     button.className = 'button--state-hidden'
     el.innerHTML = value
-    /*if(value != ""){
-      el.innerHTML = value;
-    }*/
-  }  else { // status == "Hide" // Hide -> Show
+  }  else { // status == "Hide" // Hide -> Show (Hide only changes to show)
     button.innerHTML = 'Show'
     button.className = 'button--state-show'
     el.style.visibility = 'hidden'

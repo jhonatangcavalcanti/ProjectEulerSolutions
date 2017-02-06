@@ -1,23 +1,20 @@
 import {changeButtonStatus} from './utilities'
+import {solveProblem1} from './solvers/solverSolution1'
 
-let sum = 0
-
-$(document).ready(function () {
-  let solution1 = document.getElementById('solution1')
-  let button = document.getElementById('button_solution1')
+$(document).ready(() => {
+  let ans = 0
+  let text_solution1 = document.getElementById('solution1')
+  let button_solution1 = document.getElementById('button_solution1')
 
   let solve1 = () => {
-    if (!sum) { // if not calculted yet
-      for (let i = 3 ; i < 1000 ; i++) {
-        if (!(i%3 || i%5)) {
-          sum += i
-        }
-      }
-      solution1.innerHTML = sum
+    if (!ans) { // if not calculted yet
+      changeButtonStatus(button_solution1, text_solution1, '', 'Running') // change status initialy to running
+      process.nextTick(() => {
+        ans = solveProblem1()
+        changeButtonStatus(button_solution1, text_solution1, ans, 'Show') // then, change status to Hide
+      })
     }
-
-    changeButtonStatus(button, solution1, sum, button.innerHTML)
+    changeButtonStatus(button_solution1, text_solution1, ans, button_solution1.innerHTML)
   }
-
-  button.addEventListener('click', solve1)
+  button_solution1.addEventListener('click', solve1)
 })
