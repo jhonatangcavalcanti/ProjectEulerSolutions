@@ -5,20 +5,19 @@ import {addSolution} from './problemTemplate'
 $(document).ready(() => {
   let ans = 0
 
-  addSolution(8, 'Largest product in a series')
-
-  let text_solution8 = document.getElementById('solution8')
-  let button_solution8 = document.getElementById('button_solution8')
+  let items = addSolution(8, 'Largest product in a series')
+  let text_solution = items['text_solution']
+  let button_solution = items['button_solution']
 
   let solve8 = () => {
     if (!ans) { // if not calculated yet
-      changeButtonStatus(button_solution8, text_solution8, '', 'Running') // change status initialy to running
+      changeButtonStatus(button_solution, text_solution, '', 'Running') // change status initialy to running
       process.nextTick(() => {
         ans = solveProblem8()
-        changeButtonStatus(button_solution8, text_solution8, ans, 'Show') // then, change status to Hide
+        changeButtonStatus(button_solution, text_solution, ans, 'Show') // then, change status to Hide
       })
     }
-    changeButtonStatus(button_solution8, text_solution8, ans, button_solution8.innerHTML)
+    changeButtonStatus(button_solution, text_solution, ans, button_solution.innerHTML)
   }
-  button_solution8.addEventListener('click', solve8)
+  button_solution.addEventListener('click', solve8)
 })

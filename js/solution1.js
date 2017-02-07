@@ -10,7 +10,7 @@ $(document).ready(() => {
   let button_solution = items['button_solution']
 
   let solve1 = () => {
-    if (!ans) { // if not calculted yet
+    if (!ans) { // if not calculated yet
       changeButtonStatus(button_solution, text_solution, '', 'Running') // change status initialy to running
       process.nextTick(() => {
         ans = solveProblem1()
