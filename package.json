@@ -1,8 +1,9 @@
 {
   "name": "projecteuler",
   "version": "1.0.0",
-  "description": "Solution of project euler problems in ecmascript",
+  "description": "Solutions of problems from project euler implemented in ES6",
   "scripts": {
+    "start": "webpack-dev-server --progress --colors",
     "test": "karma start my.conf.js --single-run"
   },
   "repository": {
