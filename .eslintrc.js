@@ -9,6 +9,8 @@ module.exports = {
         "$": false,
         "describe": false,
         "it": false,
+        "beforeAll": false,
+        "beforeEach": false,
         "expect": false,
         "document": false,
         "_": false

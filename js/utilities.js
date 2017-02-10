@@ -7,18 +7,20 @@ export let changeButtonStatus = (button, el, value='', status='Show') => {
   //debugger
   if (status == 'Running') { // Running -> Runnning
     button.innerHTML = 'Running'
-    button.className = 'button--state-running'
+    button.className = 'button button--state-running'
   }  else if (status == 'Show') { // Show -> Hide (Show only changes to Hide after Running)
     button.innerHTML = 'Hide'
     el.style.visibility = 'visible'
-    button.className = 'button--state-hidden'
+    button.className = 'button button--state-hidden'
     el.innerHTML = value
   }  else { // status == "Hide" // Hide -> Show (Hide only changes to show)
     button.innerHTML = 'Show'
-    button.className = 'button--state-show'
+    button.className = 'button button--state-show'
     el.style.visibility = 'hidden'
   }
 }
+
+
 
 /*
 

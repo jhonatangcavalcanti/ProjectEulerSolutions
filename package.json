@@ -4,7 +4,8 @@
   "description": "Solutions of problems from project euler implemented in ES6",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
-    "test": "karma start my.conf.js --single-run"
+    "test": "karma start my.conf.js --single-run",
+    "lint": "eslint spec js"
   },
   "repository": {
     "type": "git",

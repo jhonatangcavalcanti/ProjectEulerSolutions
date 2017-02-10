@@ -4,11 +4,12 @@
   width: 100%
 }
 
-.td, .th{
+.id_column, .title_column, .button_column, .answer_column{
   width: inherit;
   text-align: center;
   padding: 8px;
   border-bottom: 1px solid #ddd;
+  width: 25%
 }
 
 .tr_problem:hover{
@@ -22,15 +23,14 @@
     font-weight: bold;
 }
 
-.id_column, .title_column, .button_column, .answer_column{
-  @extend .td;
-  width: 25%
+.title_column{
+  text-align: left;
+  padding: 0px 0px 0px 50px;
 }
 
-.link_problem, .link_problem:visited{
+.link_problem{
   text-decoration: none;
   color: blue;
-  target: _blank;
 }
 
 .link_black{
@@ -38,26 +38,29 @@
   text-decoration: none;
 }
 
-
 .button{
   background-color: white;
   border-radius: 8px;
   padding: 6px 18px;
   text-align: center;
   margin: 4px 2px;
+
+  &--state-hidden {
+    color: red;
+  }
+  &--state-show{
+    color: black;
+  }
+  &--state-running{
+    color: gold;
+  }
 }
 
-.button--state-hidden{
-  @extend .button;
-  color: red;
-}
+.result{
+  &--state-show{
 
-.button--state-show{
-  @extend .button;
-  color: black;
-}
+  }
+  &--state-hidden{
 
-.button--state-running{
-  @extend .button;
-  color: gold;
+  }
 }

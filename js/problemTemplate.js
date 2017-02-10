@@ -1,16 +1,17 @@
 import _ from 'underscore'
+import {changeButtonStatus} from './utilities'
 
 let template = _.template(
   '<tr class="tr_problem" id=<%= id %> > ' +
-    '<td class="id_column"> <%= id %> </td> ' +
-    '<td class="title_column"><a class="link_problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"> <%= title %> </a></td> ' +
+    '<td class="id_column" id="column_id<%= id %>"> <%= id %> </td> ' +
+    '<td class="title_column" id="title_column_id<%= id %>"><a class="link_problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td> ' +
     '<td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td> ' +
-    '<td class="answer_column"><span id="solution<%= id %>" ></span></td> ' +
+    '<td class="answer_column"><span id="solution<%= id %>" class="result"></span></td> ' +
   '</tr>')
 
-let table = document.createElement('TABLE')
 
 $( () => { // $(document).ready()
+  let table = document.createElement('TABLE')
 
   table.setAttribute('class', 'table')
   table.setAttribute('id', 'problems_table')
@@ -27,7 +28,21 @@ $( () => { // $(document).ready()
 
 })
 
-export let addSolution = (id, title) => {
+export let addSolution = (id, title, solver) => {
   $('#problems_table').append(template( { id, title } )) // add new row to the table
-  return {text_solution:document.getElementById('solution' + id), button_solution:document.getElementById('button_solution' + id)}
+
+  let ans = 0
+  let text_solution = document.getElementById('solution' + id)
+  let button_solution = document.getElementById('button_solution' + id)
+
+  button_solution.addEventListener('click', () => {
+    if (!ans) { // if not calculated yet
+      changeButtonStatus(button_solution, text_solution, '', 'Running') // change status initialy to running
+      process.nextTick(() => {
+        ans = solver()
+        changeButtonStatus(button_solution, text_solution, ans, 'Show') // then, change status to Hide
+      })
+    }
+    changeButtonStatus(button_solution, text_solution, ans, button_solution.innerHTML) // works only when nextTick ends
+  })
 }
