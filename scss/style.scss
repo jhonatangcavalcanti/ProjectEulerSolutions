@@ -4,6 +4,17 @@
   width: 100%
 }
 
+.table_title{
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.tr_problem:hover{
+  background-color: #ddd;
+}
+
 .id_column, .title_column, .button_column, .answer_column{
   width: inherit;
   text-align: center;
@@ -12,30 +23,19 @@
   width: 25%
 }
 
-.tr_problem:hover{
-  background-color: #ddd;
-}
-
-.table_title{
-    font-size: 1.17em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    font-weight: bold;
-}
-
 .title_column{
   text-align: left;
   padding: 0px 0px 0px 50px;
 }
 
-.link_problem{
+.link{
   text-decoration: none;
-  color: blue;
-}
-
-.link_black{
-  color: black;
-  text-decoration: none;
+  &--type-problem{
+    color: blue;
+  }
+  &--type-black{
+    color: black;
+  }
 }
 
 .button{
@@ -57,10 +57,11 @@
 }
 
 .result{
-  &--state-show{
 
+  &--state-show{
+    visibility: visible;
   }
   &--state-hidden{
-
+    visibility: hidden;
   }
 }

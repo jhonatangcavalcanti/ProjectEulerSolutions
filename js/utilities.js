@@ -9,14 +9,14 @@ export let changeButtonStatus = (button, el, value='', status='Show') => {
     button.innerHTML = 'Running'
     button.className = 'button button--state-running'
   }  else if (status == 'Show') { // Show -> Hide (Show only changes to Hide after Running)
-    button.innerHTML = 'Hide'
-    el.style.visibility = 'visible'
     button.className = 'button button--state-hidden'
+    button.innerHTML = 'Hide'
+    el.className = 'result result--state-show'
     el.innerHTML = value
   }  else { // status == "Hide" // Hide -> Show (Hide only changes to show)
-    button.innerHTML = 'Show'
     button.className = 'button button--state-show'
-    el.style.visibility = 'hidden'
+    button.innerHTML = 'Show'
+    el.className = 'result result--state-hidden'
   }
 }
 

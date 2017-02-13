@@ -4,7 +4,7 @@ import {changeButtonStatus} from './utilities'
 let template = _.template(
   '<tr class="tr_problem" id=<%= id %> > ' +
     '<td class="id_column" id="column_id<%= id %>"> <%= id %> </td> ' +
-    '<td class="title_column" id="title_column_id<%= id %>"><a class="link_problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td> ' +
+    '<td class="title_column" id="title_column_id<%= id %>"><a class="link link--type-problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td> ' +
     '<td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td> ' +
     '<td class="answer_column"><span id="solution<%= id %>" class="result"></span></td> ' +
   '</tr>')
@@ -16,7 +16,7 @@ $( () => { // $(document).ready()
   table.setAttribute('class', 'table')
   table.setAttribute('id', 'problems_table')
   table.innerHTML +=
-    '<caption class="table_title">Solutions of <a class="link_black" href="https://projecteuler.net">projecteuler.net</a> problems:</caption>' +
+    '<caption class="table_title">Solutions of <a class="link link--type-black" href="https://projecteuler.net">projecteuler.net</a> problems:</caption>' +
     '<tr class="tr">' +
       '<th class="th">ID</th>' +
       '<th class="th">Title</th>' +
