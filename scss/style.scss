@@ -30,29 +30,30 @@
 
 .link{
   text-decoration: none;
+
   &--type-problem{
-    color: blue;
+    color: #00f;
   }
   &--type-black{
-    color: black;
+    color: #000;
   }
 }
 
 .button{
-  background-color: white;
+  background-color: #fff;
   border-radius: 8px;
   padding: 6px 18px;
   text-align: center;
   margin: 4px 2px;
 
   &--state-hidden {
-    color: red;
+    color: #f00;
   }
   &--state-show{
-    color: black;
+    color: #000;
   }
   &--state-running{
-    color: gold;
+    color: #ffd700;
   }
 }
 
