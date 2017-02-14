@@ -14,7 +14,7 @@ describe('Utilities and template', () => {
   })
 
   describe('Add a solution line', () => {
-    let table, id=0, title, solver
+    let table, id=0, title, solver, ans
     beforeAll(() => {
       table = document.createElement('TABLE')
       table.setAttribute('id', 'problems_table')
@@ -31,6 +31,7 @@ describe('Utilities and template', () => {
     it('Line has to be added to the table', () => {
       let count = table.rows.length
       addSolution(id, title, solver)
+      ans = solver()
       expect(table.rows.length).toEqual(count + 1)
     })
 
@@ -54,33 +55,33 @@ describe('Utilities and template', () => {
       })
 
       it('When click on Show for the first time, should be Running', () => {
-        changeButtonStatus(button, solution, solver(), 'Running')
+        changeButtonStatus(button, solution, 'Running')
         expect(button.innerHTML).toEqual('Running')
       })
 
       it('When running ends, should be Hide', () => {
-        changeButtonStatus(button, solution, solver(), 'Show') // from show change to hide
+        changeButtonStatus(button, solution, 'Show', ans) // from show change to hide
         expect(button.innerHTML).toEqual('Hide')
       })
 
       it('When button is clicked again, should change status, from hide to show for now', () => {
-        changeButtonStatus(button, solution, solver(), button.innerHTML) // no more need to send .. text
+        changeButtonStatus(button, solution, button.innerHTML, ans) // no more need to send .. text
         expect(button.innerHTML).toEqual('Show')
       })
 
       it('and from now on, should change status from hide to show or from show to hide', () => {
-        changeButtonStatus(button, solution, solver(), button.innerHTML) // no more need to send .. text
+        changeButtonStatus(button, solution, button.innerHTML, ans) // no more need to send .. text
         expect(button.innerHTML).toEqual('Hide')
       })
 
       it('and from now on, should change status from hide to show or from show to hide', () => {
-        changeButtonStatus(button, solution, solver(), button.innerHTML) // no more need to send .. text
+        changeButtonStatus(button, solution, button.innerHTML, ans) // no more need to send .. text
         expect(button.innerHTML).toEqual('Show')
       })
     })
 
     it('Answer must match', () => {
-      expect(Number($('#solution' + id).text())).toEqual(solver())
+      expect(Number($(`#solution${id}`).text())).toEqual(solver())
     })
   })
 

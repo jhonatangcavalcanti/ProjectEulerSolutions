@@ -3,23 +3,22 @@
   value = new value to write
   status = this is the new status of the button
 */
-export let changeButtonStatus = (button, el, value='', status='Show') => {
+export let changeButtonStatus = (button, el, status='Show', value='') => {
   //debugger
   if (status == 'Running') { // Running -> Runnning
-    button.innerHTML = 'Running'
     button.className = 'button button--state-running'
-  }  else if (status == 'Show') { // Show -> Hide (Show only changes to Hide after Running)
+    button.innerHTML = 'Running'
+  } else if (status == 'Show') { // Show -> Hide (Show only changes to Hide after Running)
     button.className = 'button button--state-hidden'
     button.innerHTML = 'Hide'
     el.className = 'result result--state-show'
     el.innerHTML = value
-  }  else { // status == "Hide" // Hide -> Show (Hide only changes to show)
+  } else { // status == "Hide" // Hide -> Show (Hide only changes to show)
     button.className = 'button button--state-show'
     button.innerHTML = 'Show'
     el.className = 'result result--state-hidden'
   }
 }
-
 
 
 /*

@@ -107,16 +107,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var template = _underscore2.default.template('<tr class="tr_problem" id=<%= id %> > ' + '<td class="id_column"> <%= id %> </td> ' + '<td class="title_column"><a class="link_problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"> <%= title %> </a></td> ' + '<td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td> ' + '<td class="answer_column"><span id="solution<%= id %>" ></span></td> ' + '</tr>');
-
-	var table = document.createElement('TABLE');
+	var template = _underscore2.default.template('<tr class="tr_problem" id=<%= id %> >\n    <td class="id_column" id="column_id<%= id %>"> <%= id %> </td>\n    <td class="title_column" id="title_column_id<%= id %>"><a class="link link--problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td>\n    <td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td>\n    <td class="answer_column"><span id="solution<%= id %>" class="result"></span></td>\n  </tr>');
 
 	$(function () {
 	  // $(document).ready()
+	  var table = document.createElement('TABLE');
 
 	  table.setAttribute('class', 'table');
 	  table.setAttribute('id', 'problems_table');
-	  table.innerHTML += '<caption class="table_title">Solutions of <a class="link_black" href="https://projecteuler.net">projecteuler.net</a> problems:</caption>' + '<tr class="tr">' + '<th class="th">ID</th>' + '<th class="th">Title</th>' + '<th class="th">Answer</th>' + '<th class="th">Value</th>' + '</tr>';
+	  table.innerHTML += '<caption class="table_title">Solutions of <a class="link link--black" href="https://projecteuler.net">projecteuler.net</a> problems:</caption>\n    <tr class="tr">\n      <th class="th">ID</th>\n      <th class="th">Title</th>\n      <th class="th">Answer</th>\n      <th class="th">Value</th>\n    </tr>';
 
 	  document.body.appendChild(table);
 	});
@@ -1927,18 +1926,18 @@
 	  if (status == 'Running') {
 	    // Running -> Runnning
 	    button.innerHTML = 'Running';
-	    button.className = 'button--state-running';
+	    button.className = 'button button--state-running';
 	  } else if (status == 'Show') {
 	    // Show -> Hide (Show only changes to Hide after Running)
+	    button.className = 'button button--state-hidden';
 	    button.innerHTML = 'Hide';
-	    el.style.visibility = 'visible';
-	    button.className = 'button--state-hidden';
+	    el.className = 'result result--state-show';
 	    el.innerHTML = value;
 	  } else {
 	    // status == "Hide" // Hide -> Show (Hide only changes to show)
+	    button.className = 'button button--state-show';
 	    button.innerHTML = 'Show';
-	    button.className = 'button--state-show';
-	    el.style.visibility = 'hidden';
+	    el.className = 'result result--state-hidden';
 	  }
 	};
 
@@ -2105,7 +2104,7 @@
 
 
 	// module
-	exports.push([module.id, ".table {\n  border-collapse: collapse;\n  width: 100%; }\n\n.td, .id_column, .title_column, .button_column, .answer_column, .th {\n  width: inherit;\n  text-align: center;\n  padding: 8px;\n  border-bottom: 1px solid #ddd; }\n\n.tr_problem:hover {\n  background-color: #ddd; }\n\n.table_title {\n  font-size: 1.17em;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  font-weight: bold; }\n\n.id_column, .title_column, .button_column, .answer_column {\n  width: 25%; }\n\n.title_column {\n  text-align: left;\n  padding: 0px 0px 0px 50px; }\n\n.link_problem, .link_problem:visited {\n  text-decoration: none;\n  color: blue; }\n\n.link_black {\n  color: black;\n  text-decoration: none; }\n\n.button, .button--state-hidden, .button--state-show, .button--state-running {\n  background-color: white;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px; }\n\n.button--state-hidden {\n  color: red; }\n\n.button--state-show {\n  color: black; }\n\n.button--state-running {\n  color: gold; }\n", ""]);
+	exports.push([module.id, ".table {\n  border-collapse: collapse;\n  width: 100%; }\n\n.table_title {\n  font-size: 1.17em;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  font-weight: bold; }\n\n.tr_problem:hover {\n  background-color: #ddd; }\n\n.id_column, .title_column, .button_column, .answer_column {\n  width: inherit;\n  text-align: center;\n  padding: 8px;\n  border-bottom: 1px solid #ddd;\n  width: 25%; }\n\n.title_column {\n  text-align: left;\n  padding: 0px 0px 0px 50px; }\n\n.link {\n  text-decoration: none; }\n  .link--problem {\n    color: #00f; }\n  .link--black {\n    color: #000; }\n\n.button {\n  background-color: #fff;\n  border-radius: 8px;\n  padding: 6px 18px;\n  text-align: center;\n  margin: 4px 2px; }\n  .button--state-hidden {\n    color: #f00; }\n  .button--state-show {\n    color: #000; }\n  .button--state-running {\n    color: #ffd700; }\n\n.result--state-show {\n  visibility: visible; }\n\n.result--state-hidden {\n  visibility: hidden; }\n", ""]);
 
 	// exports
 
