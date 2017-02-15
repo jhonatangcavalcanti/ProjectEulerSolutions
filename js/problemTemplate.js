@@ -31,8 +31,8 @@ export let addSolution = (id, title, solver) => {
   $('#problems_table').append(template( { id, title } )) // add new row to the table
 
   let ans = 0
-  let text_solution = document.getElementById('solution' + id)
-  let button_solution = document.getElementById('button_solution' + id)
+  let text_solution = document.getElementById(`solution${id}`)
+  let button_solution = document.getElementById(`button_solution${id}`)
 
   button_solution.addEventListener('click', () => {
     if (!ans) { // if not calculated yet
