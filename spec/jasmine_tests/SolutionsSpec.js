@@ -46,7 +46,7 @@ describe('Utilities functions', () => {
 })
 
 describe('Adding solutions', () => {
-  let table, id=0, title, solver, ans
+  let table, id=0, title, solver
 
   beforeAll(() => {
     table = document.createElement('TABLE')
@@ -54,12 +54,12 @@ describe('Adding solutions', () => {
     document.body.appendChild(table)
   })
 
-  beforeEach(() => {
+  beforeAll(() => {
     id += 1
     title = `problem ${id}`
-    solver = () => { return 0 }
-    ans = solver()
-    // console.log('id ', id)
+    solver = function () {
+      return 1
+    }
   })
 
   it('should add a line to the table and data must match', () => {
@@ -71,53 +71,44 @@ describe('Adding solutions', () => {
     expect($(`#title_column_id${id}`).text()).toEqual(title)
   })
 
-  // it('Data must match', () => {
-  //   // console.log($('#solution' + id))
-  //
-  //   //expect(document.getElementById(id).innerHTML).toEqual(table.rows.namedItem(id).innerHTML)
-  // })
-
   describe('Status of button', () => {
-    let button, solution
+    let button
 
     beforeAll(() => {
       button = document.getElementById(`button_solution${id}`)
-      console.log(id)
-      solution = document.getElementById(`solution${id}`)
     })
 
     it('Initially button should be Show', () => {
       expect(button.innerHTML).toEqual('Show')
     })
 
-    it('When click on Show for the first time, should be Running', () => {
-      changeButtonStatus(button, solution, 'Running')
+    it('When click on Show for the first time, should be Running', function (done) {
+      button.click()
       expect(button.innerHTML).toEqual('Running')
+      process.nextTick(done) // ends execution of solver() inside addSolution()
     })
 
     it('When running ends, should be Hide', () => {
-      changeButtonStatus(button, solution, 'Show', ans) // from show change to hide
       expect(button.innerHTML).toEqual('Hide')
     })
 
     it('When button is clicked again, should change status, from hide to show for now', () => {
-      changeButtonStatus(button, solution, button.innerHTML, ans) // no more need to send .. text
+      button.click()
       expect(button.innerHTML).toEqual('Show')
     })
 
     it('and from now on, should change status from hide to show or from show to hide', () => {
-      changeButtonStatus(button, solution, button.innerHTML, ans) // no more need to send .. text
+      button.click()
       expect(button.innerHTML).toEqual('Hide')
     })
 
     it('and from now on, should change status from hide to show or from show to hide', () => {
-      changeButtonStatus(button, solution, button.innerHTML, ans) // no more need to send .. text
+      button.click()
       expect(button.innerHTML).toEqual('Show')
     })
-  })
 
+  })
   it('Answer must match', () => {
-    console.log(id)
     expect(Number($(`#solution${id}`).text())).toEqual(solver()) // answer is always equals, will pass all tests
   })
 })

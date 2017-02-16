@@ -35,7 +35,7 @@ export let addSolution = (id, title, solver) => {
   let button_solution = document.getElementById(`button_solution${id}`)
 
   button_solution.addEventListener('click', () => {
-    if (!ans) { // if not calculated yet
+    if (!ans && button_solution.innerHTML != 'Running') { // if not calculated yet and is not being calculated
       changeButtonStatus(button_solution, text_solution, 'Running') // change status initialy to running
       process.nextTick(() => {
         ans = solver()
