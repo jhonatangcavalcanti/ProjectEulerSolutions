@@ -30,3 +30,8 @@ export let solveProblem8 = () => {
   }
   return max_prod
 }
+
+self.addEventListener('message', () => {
+  let workerResult = solveProblem8()
+  postMessage(workerResult)
+})

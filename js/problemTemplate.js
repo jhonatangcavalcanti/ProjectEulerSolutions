@@ -27,21 +27,25 @@ $( () => { // $(document).ready()
 
 })
 
-export let addSolution = (id, title, solver) => {
+export let addSolution = (id, title) => {
   $('#problems_table').append(template( { id, title } )) // add new row to the table
 
   let ans = 0
   let text_solution = document.getElementById(`solution${id}`)
   let button_solution = document.getElementById(`button_solution${id}`)
 
+  let myWorker = require(`worker-loader!./solvers/solverSolution${id}`)()
+
+  myWorker.addEventListener('message', function (e) {
+    ans = e.data
+    changeButtonStatus(button_solution, text_solution, 'Show', ans) // change status to Hide when running ends
+  })
+
   button_solution.addEventListener('click', () => {
     if (!ans && button_solution.innerHTML != 'Running') { // if not calculated yet and is not being calculated
       changeButtonStatus(button_solution, text_solution, 'Running') // change status initialy to running
-      process.nextTick(() => {
-        ans = solver()
-        changeButtonStatus(button_solution, text_solution, 'Show', ans) // then, change status to Hide
-      })
+      myWorker.postMessage({})
     }
-    changeButtonStatus(button_solution, text_solution, button_solution.innerHTML, ans) // works only when nextTick ends
+    changeButtonStatus(button_solution, text_solution, button_solution.innerHTML, ans) // works only when running ends
   })
 }

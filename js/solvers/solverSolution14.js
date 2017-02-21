@@ -30,3 +30,8 @@ export let solveProblem14 = () => {
   }
   return number_longest_chain
 }
+
+self.addEventListener('message', () => {
+  let workerResult = solveProblem14()
+  postMessage(workerResult)
+})

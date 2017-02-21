@@ -6,9 +6,10 @@ module.exports = {
   },
   module: {
     loaders: [
-        { test: /\.css$/, loader: 'style!css' },
-        { test: /\.js$/, loader: 'babel'},
-        { test: /\.scss$/, loader: 'style!css!sass'}
+        { test: /\.css$/, loader: 'style-loader!css-loader' },
+        { test: /\.js$/, loader: 'babel-loader'},
+        { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'}
+        //{ test: /js\/solvers/, loader: 'worker-loader' }
     ]
   },
   // output.publicPath: '/foo-app/'

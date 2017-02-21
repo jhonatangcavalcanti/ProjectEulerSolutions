@@ -7,3 +7,8 @@ export let solveProblem1 = () => {
   }
   return sum
 }
+
+self.addEventListener('message', () => {
+  let workerResult = solveProblem1()
+  postMessage(workerResult)
+})
