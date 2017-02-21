@@ -4,6 +4,7 @@
   "description": "Solutions of problems from project euler implemented in ES6",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
+    "server": "webpack-dev-server --progress --colors --host 0.0.0.0",
     "test": "karma start my.conf.js --single-run",
     "lint": "eslint spec js"
   },
@@ -45,6 +46,7 @@
     "underscore": "^1.8.3",
     "watchify": "^3.9.0",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "worker-loader": "^0.7.1"
   }
 }
