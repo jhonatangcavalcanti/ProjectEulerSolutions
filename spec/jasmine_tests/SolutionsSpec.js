@@ -1,4 +1,4 @@
-import {changeButtonStatus, isPrime, fib} from '../../js/utilities'
+import {isPrime, fib} from '../../js/utilities'
 import {addSolution} from '../../js/problemTemplate'
 
 describe('Utilities functions', () => {
@@ -53,7 +53,9 @@ describe('Adding solutions', () => {
     table.setAttribute('id', 'problems_table')
     document.body.appendChild(table)
   })
-
+  // beforeEach((done) => {
+  //   done()
+  // })
   beforeAll(() => {
     id += 1
     title = `problem ${id}`
@@ -70,6 +72,27 @@ describe('Adding solutions', () => {
     expect(Number($(`#column_id${id}`).text())).toEqual(id)
     expect($(`#title_column_id${id}`).text()).toEqual(title)
   })
+  // let button
+  // it('flow of button should work, from initial "show" to "running" to "hide" and then swap between "show" and "hide"', (done) => {
+  //   button = document.getElementById(`button_solution${id}`)
+  //   expect(button.innerHTML).toEqual('Show')
+  //   button.click()
+  //   console.log(button.innerHTML)
+  //   expect(button.innerHTML).toEqual('Running')
+  //   console.log(button.innerHTML)
+  //   //done()
+  //   console.log(button.innerHTML)
+  //   // process.nextTick(done) // ends execution of solver() inside addSolution()
+  //   expect(button.innerHTML).toEqual('Hide')
+  //   button.click()
+  //   expect(button.innerHTML).toEqual('Show')
+  //   button.click()
+  //   expect(button.innerHTML).toEqual('Hide')
+  //   button.click()
+  //   expect(button.innerHTML).toEqual('Show')
+  //   // done()
+  // })
+
 
   describe('Status of button', () => {
     let button
@@ -85,7 +108,7 @@ describe('Adding solutions', () => {
     it('When click on Show for the first time, should be Running', function (done) {
       button.click()
       expect(button.innerHTML).toEqual('Running')
-      process.nextTick(done) // ends execution of solver() inside addSolution()
+      //process.nextTick(done) // ends execution of solver() inside addSolution()
     })
 
     it('When running ends, should be Hide', () => {
@@ -108,6 +131,7 @@ describe('Adding solutions', () => {
     })
 
   })
+
   it('Answer must match', () => {
     expect(Number($(`#solution${id}`).text())).toEqual(solver()) // answer is always equals, will pass all tests
   })
