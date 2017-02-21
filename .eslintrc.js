@@ -13,7 +13,9 @@ module.exports = {
         "beforeEach": false,
         "expect": false,
         "document": false,
-        "_": false
+        "_": false,
+        "postMessage": false,
+        "self": false
     },
     "extends": "eslint:recommended",
     "parserOptions": {
