@@ -1,9 +1,10 @@
 let webpack = require('webpack')
+let path = require('path')
 
 module.exports = {
-  entry: __dirname + '/js/entry.js',
+  entry: path.join(__dirname, 'js', 'entry.js'),
   output: {
-    path: __dirname + '/public/',
+    path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
   },
   module: {
@@ -22,6 +23,6 @@ module.exports = {
   ],
   // output.publicPath: '/foo-app/'
   devServer: {
-    contentBase: __dirname + '/public/'
+    contentBase: path.join(__dirname, 'public')
   }
 }
