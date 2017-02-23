@@ -1,3 +1,5 @@
+let webpack = require('webpack')
+
 module.exports = {
   entry: __dirname + '/js/entry.js',
   output: {
@@ -9,9 +11,15 @@ module.exports = {
         { test: /\.css$/, loader: 'style-loader!css-loader' },
         { test: /\.js$/, loader: 'babel-loader'},
         { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'}
-        //{ test: /js\/solvers/, loader: 'worker-loader' }
     ]
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ],
   // output.publicPath: '/foo-app/'
   devServer: {
     contentBase: __dirname + '/public/'
