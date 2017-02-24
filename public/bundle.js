@@ -48,21 +48,19 @@
 
 	var _problemTemplate = __webpack_require__(1);
 
-	var _solverSolution = __webpack_require__(4);
+	var _webworkifyWebpack = __webpack_require__(4);
 
-	var _solverSolution2 = __webpack_require__(5);
+	var _webworkifyWebpack2 = _interopRequireDefault(_webworkifyWebpack);
 
-	var _solverSolution3 = __webpack_require__(6);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var _solverSolution4 = __webpack_require__(7);
+	__webpack_require__(5);
+	// import Worker from 'worker-loader!./solvers/solverSolution10'
+	// let test = require('worker-loader!./solvers/solverSolution1')()
 
-	__webpack_require__(8);
+	var solveds = [{ id: 1, title: 'Multiples of 3 and 5', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(9)) }, { id: 8, title: 'Largest product in a series', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(10)) }, { id: 10, title: 'Summation of primes', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(11)) }, { id: 14, title: 'Longest Collatz sequence', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(12)) }];
 
-	// export let myWorker = new Worker('./solvers/solverSolution10')
-
-	var solveds = [{ id: 1, title: 'Multiples of 3 and 5', solver: _solverSolution.solveProblem1 }, { id: 8, title: 'Largest product in a series', solver: _solverSolution2.solveProblem8 }, { id: 10, title: 'Summation of primes', solver: _solverSolution3.solveProblem10 }, { id: 14, title: 'Longest Collatz sequence', solver: _solverSolution4.solveProblem14 }];
-
-	$(document).ready(function () {
+	var fn = function fn() {
 	  var _iteratorNormalCompletion = true;
 	  var _didIteratorError = false;
 	  var _iteratorError = undefined;
@@ -71,7 +69,7 @@
 	    for (var _iterator = solveds[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	      var sol = _step.value;
 
-	      (0, _problemTemplate.addSolution)(sol['id'], sol['title'], sol['solver']);
+	      (0, _problemTemplate.addSolution)(sol['id'], sol['title'], sol['worker']);
 	    }
 	  } catch (err) {
 	    _didIteratorError = true;
@@ -87,7 +85,18 @@
 	      }
 	    }
 	  }
-	});
+	};
+
+	if (document.readyState != 'loading') {
+	  // should verify alternative solution
+	  fn();
+	} else {
+	  document.addEventListener('DOMContentLoaded', fn);
+	}
+
+	// $(document).ready(() => {
+	//
+	// })
 
 /***/ },
 /* 1 */
@@ -110,8 +119,7 @@
 
 	var template = _underscore2.default.template('<tr class="tr_problem" id=<%= id %> >\n    <td class="id_column" id="column_id<%= id %>"> <%= id %> </td>\n    <td class="title_column" id="title_column_id<%= id %>"><a class="link link--problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td>\n    <td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td>\n    <td class="answer_column"><span id="solution<%= id %>" class="result"></span></td>\n  </tr>');
 
-	$(function () {
-	  // $(document).ready()
+	var fn = function fn() {
 	  var table = document.createElement('TABLE');
 
 	  table.setAttribute('class', 'table');
@@ -119,37 +127,40 @@
 	  table.innerHTML += '<caption class="table_title">Solutions of <a class="link link--black" href="https://projecteuler.net">projecteuler.net</a> problems:</caption>\n    <tr class="tr">\n      <th class="th">ID</th>\n      <th class="th">Title</th>\n      <th class="th">Answer</th>\n      <th class="th">Value</th>\n    </tr>';
 
 	  document.body.appendChild(table);
-	});
+	};
 
-	if (window.Worker) {
-	  var _myWorker = new Worker('./solvers/solverSolution10');
-	  console.log(_myWorker);
+	if (document.readyState != 'loading') {
+	  // should verify alternative solution
+	  fn();
+	} else {
+	  document.addEventListener('DOMContentLoaded', fn);
 	}
 
-	var addSolution = exports.addSolution = function addSolution(id, title, solver) {
+	// $( () => { // $(document).ready()
+	//
+	//
+	// })
+
+	var addSolution = exports.addSolution = function addSolution(id, title, worker) {
+	  //$('#id').append(template())
 	  $('#problems_table').append(template({ id: id, title: title })); // add new row to the table
 
 	  var ans = 0;
 	  var text_solution = document.getElementById('solution' + id);
 	  var button_solution = document.getElementById('button_solution' + id);
 
+	  worker.addEventListener('message', function (e) {
+	    ans = e.data;
+	    (0, _utilities.changeButtonStatus)(button_solution, text_solution, 'Show', ans); // change status to Hide when running ends
+	  });
+
 	  button_solution.addEventListener('click', function () {
 	    if (!ans && button_solution.innerHTML != 'Running') {
 	      // if not calculated yet and is not being calculated
 	      (0, _utilities.changeButtonStatus)(button_solution, text_solution, 'Running'); // change status initialy to running
-	      // process.nextTick(() => {
-	      //ans = solver()
-
-	      myWorker.onmessage = function (e) {
-	        console.log('myWorker.onmessage executing');
-	        ans = e.data;
-	        console.log('Message received from worker');
-	        (0, _utilities.changeButtonStatus)(button_solution, text_solution, 'Show', ans); // then, change status to Hide
-	      };
-	      // changeButtonStatus(button_solution, text_solution, 'Show', ans) // then, change status to Hide
-	      // })
+	      worker.postMessage({});
 	    }
-	    (0, _utilities.changeButtonStatus)(button_solution, text_solution, button_solution.innerHTML, ans); // works only when nextTick ends
+	    (0, _utilities.changeButtonStatus)(button_solution, text_solution, button_solution.innerHTML, ans); // works only when running ends
 	  });
 	};
 
@@ -1804,144 +1815,111 @@
 
 /***/ },
 /* 4 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var solveProblem1 = exports.solveProblem1 = function solveProblem1() {
-	  var sum = 0;
-	  for (var i = 3; i < 1000; i++) {
-	    if (!(i % 3 || i % 5)) {
-	      sum += i;
-	    }
-	  }
-	  return sum;
-	};
-
-	onmessage = function onmessage(e) {
-	  var workerResult = solveProblem1();
-	  postMessage(workerResult);
-	};
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var solveProblem8 = exports.solveProblem8 = function solveProblem8() {
-	  var max_prod = 0,
-	      grid = '73167176531330624919225119674426574742355349194934' + '96983520312774506326239578318016984801869478851843' + '85861560789112949495459501737958331952853208805511' + '12540698747158523863050715693290963295227443043557' + '66896648950445244523161731856403098711121722383113' + '62229893423380308135336276614282806444486645238749' + '30358907296290491560440772390713810515859307960866' + '70172427121883998797908792274921901699720888093776' + '65727333001053367881220235421809751254540594752243' + '52584907711670556013604839586446706324415722155397' + '53697817977846174064955149290862569321978468622482' + '83972241375657056057490261407972968652414535100474' + '82166370484403199890008895243450658541227588666881' + '16427171479924442928230863465674813919123162824586' + '17866458359124566529476545682848912883142607690042' + '24219022671055626321111109370544217506941658960408' + '07198403850962455444362981230987879927244284909188' + '84580156166097919133875499200524063689912560717606' + '05886116467109405077541002256983155200055935729725' + '71636269561882670428252483600823257530420752963450';
-
-	  for (var i = 0; i < grid.length; i++) {
-	    var prod = 1;
-	    for (var j = 0; j < 13 && i + j < grid.length; j++) {
-	      prod *= grid[i + j];
-	      if (!prod) break;
-	    }
-	    max_prod = Math.max(max_prod, prod);
-	  }
-	  return max_prod;
-	};
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.solveProblem10 = undefined;
-
-	var _utilities = __webpack_require__(3);
-
-	var solveProblem10 = exports.solveProblem10 = function solveProblem10() {
-	  var sum = 0;
-	  for (var i = 2; i < 2000000; i++) {
-	    //debugger
-	    if ((0, _utilities.isPrime)(i)) {
-	      sum += i;
-	    }
+	function webpackBootstrapFunc(modules) {
+	  var installedModules = {};
+	  function __webpack_require__(moduleId) {
+	    if (installedModules[moduleId]) return installedModules[moduleId].exports;
+	    var module = installedModules[moduleId] = {
+	      exports: {},
+	      id: moduleId,
+	      loaded: false
+	    };
+	    modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+	    module.loaded = true;
+	    return module.exports;
 	  }
-	  console.log('finish running 10');
-	  return sum;
-	};
+	  __webpack_require__.m = modules;
+	  __webpack_require__.c = installedModules;
+	  __webpack_require__.oe = function (err) {
+	    throw err;
+	  };
+	  __webpack_require__.p = '';
+	  var f = __webpack_require__(__webpack_require__.s = ENTRY_MODULE);
+	  return f.default || f; // try to call default if defined to also support babel esmodule exports
+	}
 
-	onmessage = function onmessage(e) {
-	  console.log('Message received from main script');
-	  var workerResult = 10; //solveProblem10()
-	  console.log('Posting message back to main script');
-	  postMessage(workerResult);
+	// http://stackoverflow.com/a/2593661/130442
+	function quoteRegExp(str) {
+	  return (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');
+	}
+
+	function getModuleDependencies(module) {
+	  var retval = [];
+	  var fnString = module.toString();
+	  var wrapperSignature = fnString.match(/^function\s?\(\w+,\s*\w+,\s*(\w+)\)/);
+	  if (!wrapperSignature) return retval;
+
+	  var webpackRequireName = wrapperSignature[1];
+	  var re = new RegExp(quoteRegExp(webpackRequireName) + '\\([^)]*?(\\d+)\\)', 'g'); // additional chars when output.pathinfo is true
+	  var match;
+	  while (match = re.exec(fnString)) {
+	    retval.push(parseInt(match[1], 10));
+	  }
+	  return retval;
+	}
+
+	function getRequiredModules(sources, moduleId) {
+	  var modulesQueue = [moduleId];
+	  var requiredModules = [];
+	  var seenModules = {};
+
+	  while (modulesQueue.length) {
+	    var moduleToCheck = modulesQueue.pop();
+	    if (seenModules[moduleToCheck] || !sources[moduleToCheck]) continue;
+	    seenModules[moduleToCheck] = true;
+	    requiredModules.push(moduleToCheck);
+	    var newModules = getModuleDependencies(sources[moduleToCheck]);
+	    modulesQueue = modulesQueue.concat(newModules);
+	  }
+
+	  return requiredModules;
+	}
+
+	module.exports = function (moduleId, options) {
+	  options = options || {};
+	  var sources = __webpack_require__.m;
+
+	  var requiredModules = options.all ? Object.keys(sources) : getRequiredModules(sources, moduleId);
+	  var src = '(' + webpackBootstrapFunc.toString().replace('ENTRY_MODULE', moduleId) + ')({' + requiredModules.map(function (id) {
+	    return '' + id + ': ' + sources[id].toString();
+	  }).join(',') + '})(self);';
+
+	  var blob = new window.Blob([src], { type: 'text/javascript' });
+	  if (options.bare) {
+	    return blob;
+	  }
+
+	  var URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
+
+	  var workerUrl = URL.createObjectURL(blob);
+	  var worker = new window.Worker(workerUrl);
+	  worker.objectURL = workerUrl;
+
+	  return worker;
 	};
 
 /***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var longest_chain = 0;
-	var number_longest_chain = 0;
-	var chain_size = [];
-
-	var collatz_steps = function collatz_steps(n) {
-	  var steps = 0;
-	  while (n > 1) {
-	    if (chain_size[n] != undefined) {
-	      steps += chain_size[n];
-	      break;
-	    } else {
-	      if (n % 2 == 0) {
-	        n /= 2;
-	      } else {
-	        n = 3 * n + 1;
-	      }
-	      steps++;
-	    }
-	  }
-	  return steps;
-	};
-
-	var solveProblem14 = exports.solveProblem14 = function solveProblem14() {
-	  for (var i = 1; i < 1000000; i++) {
-	    chain_size[i] = collatz_steps(i);
-	    if (longest_chain < chain_size[i]) {
-	      longest_chain = Math.max(longest_chain, chain_size[i]);
-	      number_longest_chain = i;
-	    }
-	  }
-	  return number_longest_chain;
-	};
-
-/***/ },
-/* 8 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(9);
+	var content = __webpack_require__(6);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(11)(content, {});
+	var update = __webpack_require__(8)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./style.scss", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/sass-loader/index.js!./style.scss");
+			module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/index.js!./style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1951,10 +1929,10 @@
 	}
 
 /***/ },
-/* 9 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(10)();
+	exports = module.exports = __webpack_require__(7)();
 	// imports
 
 
@@ -1965,7 +1943,7 @@
 
 
 /***/ },
-/* 10 */
+/* 7 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2020,7 +1998,7 @@
 	};
 
 /***/ },
-/* 11 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2270,6 +2248,147 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = work;
+	var solveProblem1 = exports.solveProblem1 = function solveProblem1() {
+	  var sum = 0;
+	  for (var i = 3; i < 1000; i++) {
+	    if (!(i % 3 || i % 5)) {
+	      sum += i;
+	    }
+	  }
+	  return sum;
+	};
+
+	function work(self) {
+	  self.addEventListener('message', function () {
+	    var workerResult = solveProblem1();
+	    self.postMessage(workerResult);
+	  });
+	}
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = worker;
+	var solveProblem8 = exports.solveProblem8 = function solveProblem8() {
+	  var max_prod = 0,
+	      grid = '73167176531330624919225119674426574742355349194934' + '96983520312774506326239578318016984801869478851843' + '85861560789112949495459501737958331952853208805511' + '12540698747158523863050715693290963295227443043557' + '66896648950445244523161731856403098711121722383113' + '62229893423380308135336276614282806444486645238749' + '30358907296290491560440772390713810515859307960866' + '70172427121883998797908792274921901699720888093776' + '65727333001053367881220235421809751254540594752243' + '52584907711670556013604839586446706324415722155397' + '53697817977846174064955149290862569321978468622482' + '83972241375657056057490261407972968652414535100474' + '82166370484403199890008895243450658541227588666881' + '16427171479924442928230863465674813919123162824586' + '17866458359124566529476545682848912883142607690042' + '24219022671055626321111109370544217506941658960408' + '07198403850962455444362981230987879927244284909188' + '84580156166097919133875499200524063689912560717606' + '05886116467109405077541002256983155200055935729725' + '71636269561882670428252483600823257530420752963450';
+
+	  for (var i = 0; i < grid.length; i++) {
+	    var prod = 1;
+	    for (var j = 0; j < 13 && i + j < grid.length; j++) {
+	      prod *= grid[i + j];
+	      if (!prod) break;
+	    }
+	    max_prod = Math.max(max_prod, prod);
+	  }
+	  return max_prod;
+	};
+
+	function worker(self) {
+	  self.addEventListener('message', function () {
+	    var workerResult = solveProblem8();
+	    self.postMessage(workerResult);
+	  });
+	}
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.solveProblem10 = undefined;
+	exports.default = worker;
+
+	var _utilities = __webpack_require__(3);
+
+	var solveProblem10 = exports.solveProblem10 = function solveProblem10() {
+	  var sum = 0;
+	  for (var i = 2; i < 2000000; i++) {
+	    if ((0, _utilities.isPrime)(i)) {
+	      sum += i;
+	    }
+	  }
+	  return sum;
+	};
+
+	// onmessage = function() {
+	function worker(self) {
+	  self.addEventListener('message', function () {
+	    var workerResult = solveProblem10();
+	    self.postMessage(workerResult);
+	  });
+	}
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = worker;
+	var longest_chain = 0;
+	var number_longest_chain = 0;
+	var chain_size = [];
+
+	var collatz_steps = function collatz_steps(n) {
+	  var steps = 0;
+	  while (n > 1) {
+	    if (chain_size[n] != undefined) {
+	      steps += chain_size[n];
+	      break;
+	    } else {
+	      if (n % 2 == 0) {
+	        n /= 2;
+	      } else {
+	        n = 3 * n + 1;
+	      }
+	      steps++;
+	    }
+	  }
+	  return steps;
+	};
+
+	var solveProblem14 = exports.solveProblem14 = function solveProblem14() {
+	  for (var i = 1; i < 1000000; i++) {
+	    chain_size[i] = collatz_steps(i);
+	    if (longest_chain < chain_size[i]) {
+	      longest_chain = Math.max(longest_chain, chain_size[i]);
+	      number_longest_chain = i;
+	    }
+	  }
+	  return number_longest_chain;
+	};
+
+	function worker() {
+	  self.addEventListener('message', function () {
+	    var workerResult = solveProblem14();
+	    self.postMessage(workerResult);
+	  });
+	}
 
 /***/ }
 /******/ ]);
