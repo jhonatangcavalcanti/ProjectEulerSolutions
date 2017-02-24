@@ -1,7 +1,8 @@
 let webpack = require('webpack')
 let path = require('path')
+let env = process.env.WEBPACK_ENV
 
-module.exports = {
+let webpackConfig = {
   entry: path.join(__dirname, 'js', 'entry.js'),
   output: {
     path: path.join(__dirname, 'public'),
@@ -15,14 +16,24 @@ module.exports = {
     ]
   },
   plugins: [
+
+  ],
+  // output.publicPath: '/foo-app/'
+  // devServer: {
+    // contentBase: path.join(__dirname, 'public')
+  // }
+}
+
+if (env == 'build') {
+  webpackConfig.output.path = path.join(__dirname, 'dist')
+  webpackConfig.output.filename = 'bundle.min.js'
+
+  webpackConfig.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
-    })
-  ],
-  // output.publicPath: '/foo-app/'
-  devServer: {
-    contentBase: path.join(__dirname, 'public')
-  }
+    }))
 }
+
+module.exports = webpackConfig
