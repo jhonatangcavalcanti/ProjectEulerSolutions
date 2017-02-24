@@ -9,7 +9,7 @@ let template = _.template(
     <td class="answer_column"><span id="solution<%= id %>" class="result"></span></td>
   </tr>`)
 
-$( () => { // $(document).ready()
+let fn = () => {
   let table = document.createElement('TABLE')
 
   table.setAttribute('class', 'table')
@@ -24,19 +24,28 @@ $( () => { // $(document).ready()
     </tr>`
 
   document.body.appendChild(table)
+}
 
-})
+if (document.readyState != 'loading') { // should verify alternative solution
+  fn()
+} else {
+  document.addEventListener('DOMContentLoaded', fn)
+}
 
-export let addSolution = (id, title) => {
+// $( () => { // $(document).ready()
+//
+//
+// })
+
+export let addSolution = (id, title, worker) => {
+  //$('#id').append(template())
   $('#problems_table').append(template( { id, title } )) // add new row to the table
 
   let ans = 0
   let text_solution = document.getElementById(`solution${id}`)
   let button_solution = document.getElementById(`button_solution${id}`)
 
-  let myWorker = require(`worker-loader!./solvers/solverSolution${id}`)()
-
-  myWorker.addEventListener('message', function (e) {
+  worker.addEventListener('message', function (e) {
     ans = e.data
     changeButtonStatus(button_solution, text_solution, 'Show', ans) // change status to Hide when running ends
   })
@@ -44,7 +53,7 @@ export let addSolution = (id, title) => {
   button_solution.addEventListener('click', () => {
     if (!ans && button_solution.innerHTML != 'Running') { // if not calculated yet and is not being calculated
       changeButtonStatus(button_solution, text_solution, 'Running') // change status initialy to running
-      myWorker.postMessage({})
+      worker.postMessage({})
     }
     changeButtonStatus(button_solution, text_solution, button_solution.innerHTML, ans) // works only when running ends
   })
