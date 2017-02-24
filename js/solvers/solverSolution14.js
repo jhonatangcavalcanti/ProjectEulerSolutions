@@ -8,10 +8,10 @@ let collatz_steps = (n) => {
     if (chain_size[n] != undefined) {
       steps += chain_size[n]
       break
-    }    else {
+    } else {
       if (n%2 == 0) {
         n /= 2
-      }      else {
+      } else {
         n = 3*n + 1
       }
       steps++
@@ -31,7 +31,9 @@ export let solveProblem14 = () => {
   return number_longest_chain
 }
 
-self.addEventListener('message', () => {
-  let workerResult = solveProblem14()
-  postMessage(workerResult)
-})
+export default function worker () {
+  self.addEventListener('message', () => {
+    let workerResult = solveProblem14()
+    self.postMessage(workerResult)
+  })
+}

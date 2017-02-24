@@ -31,7 +31,9 @@ export let solveProblem8 = () => {
   return max_prod
 }
 
-self.addEventListener('message', () => {
-  let workerResult = solveProblem8()
-  postMessage(workerResult)
-})
+export default function worker (self) {
+  self.addEventListener('message', () => {
+    let workerResult = solveProblem8()
+    self.postMessage(workerResult)
+  })
+}

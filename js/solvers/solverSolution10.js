@@ -11,7 +11,9 @@ export let solveProblem10 = () => {
 }
 
 // onmessage = function() {
-self.addEventListener('message', () => {
-  let workerResult = solveProblem10()
-  postMessage(workerResult)
-})
+export default function worker (self) {
+  self.addEventListener('message', () => {
+    let workerResult = solveProblem10()
+    self.postMessage(workerResult)
+  })
+}
