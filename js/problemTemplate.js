@@ -1,15 +1,8 @@
 import _ from 'underscore'
 import {changeButtonStatus} from './utilities'
 
-let template = _.template(
-  `<tr class="tr_problem" id=<%= id %> >
-    <td class="id_column" id="column_id<%= id %>"> <%= id %> </td>
-    <td class="title_column" id="title_column_id<%= id %>"><a class="link link--problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td>
-    <td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td>
-    <td class="answer_column"><span id="solution<%= id %>" class="result"></span></td>
-  </tr>`)
 
-let fn = () => {
+$( () => { // $(document).ready()
   let table = document.createElement('TABLE')
 
   table.setAttribute('class', 'table')
@@ -24,37 +17,35 @@ let fn = () => {
     </tr>`
 
   document.body.appendChild(table)
-}
+})
 
-if (document.readyState != 'loading') { // should verify alternative solution
-  fn()
-} else {
-  document.addEventListener('DOMContentLoaded', fn)
-}
-
-// $( () => { // $(document).ready()
-//
-//
-// })
+let template = _.template(
+  `<tr class="tr_problem" id=<%= id %> >
+    <td class="id_column" id="column_id<%= id %>"> <%= id %> </td>
+    <td class="title_column" id="title_column_id<%= id %>"><a class="link link--problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td>
+    <td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td>
+    <td class="answer_column"><span id="solution<%= id %>" class="result"></span></td>
+  </tr>`)
 
 export let addSolution = (id, title, worker) => {
-  //$('#id').append(template())
+
   $('#problems_table').append(template( { id, title } )) // add new row to the table
 
   let ans = 0
   let text_solution = document.getElementById(`solution${id}`)
   let button_solution = document.getElementById(`button_solution${id}`)
+  // change is the function where this refers to the specific button and answer fields on the page
+  let change = changeButtonStatus.bind({button:button_solution, answer:text_solution})
 
   worker.addEventListener('message', function (e) {
     ans = e.data
-    changeButtonStatus(button_solution, text_solution, 'Show', ans) // change status to Hide when running ends
+    change(ans) // sends answer to be visible
   })
 
-  button_solution.addEventListener('click', () => {
-    if (!ans && button_solution.innerHTML != 'Running') { // if not calculated yet and is not being calculated
-      changeButtonStatus(button_solution, text_solution, 'Running') // change status initialy to running
-      worker.postMessage({})
+  button_solution.addEventListener('click', function () {
+    if (!ans && this.innerHTML != 'Running') { // if not calculated yet and is not being calculated
+      worker.postMessage({}) // send message to work start to run the solver
     }
-    changeButtonStatus(button_solution, text_solution, button_solution.innerHTML, ans) // works only when running ends
+    change() // change status of button after click on it
   })
 }
