@@ -1,27 +1,3 @@
-
-export let changeButtonStatus = function (value='') {
-  /**
-   * @description Change status of the button when it's clicked
-   * @param {Number} value The problem's answer to insert in the answer field.
-   */
-  if (value || this.answer.innerHTML) { // true when the worker sends the answer or when it was previous calculated
-    if (value || this.button.innerHTML == 'Show') {
-      this.button.className = 'button button--state-hidden'
-      this.button.innerHTML = 'Hide'
-      this.answer.className = 'result result--state-show'
-      if (value)
-        this.answer.innerHTML = value
-    } else {
-      this.button.className = 'button button--state-show'
-      this.button.innerHTML = 'Show'
-      this.answer.className = 'result result--state-hidden'
-    }
-  } else { // answer was not calculated yet, so solver starts to run
-    this.button.className = 'button button--state-running'
-    this.button.innerHTML = 'Running'
-  }
-}
-
 export let isPrime = (number) => {
   /**
    * @description Verify if any number is prime.
