@@ -20,7 +20,7 @@ let collatz_steps = (n) => {
   return steps
 }
 
-export let solveProblem14 = () => {
+let solveProblem14 = () => {
   for (let i = 1 ; i < 1000000 ; i++) {
     chain_size[i] = collatz_steps(i)
     if (longest_chain < chain_size[i]) {
