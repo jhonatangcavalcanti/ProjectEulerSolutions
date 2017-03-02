@@ -5,7 +5,7 @@
   "scripts": {
     "start": "WEBPACK_ENV=dev webpack-dev-server --progress --colors --content-base public/",
     "release": "WEBPACK_ENV=build webpack",
-    "server": "webpack-dev-server --progress --colors --host 0.0.0.0 --port 80",
+    "server": "webpack-dev-server --progress --colors --host 0.0.0.0 --port 8080 --content-base public/",
     "test": "karma start my.conf.js --single-run",
     "lint": "eslint spec js"
   },
