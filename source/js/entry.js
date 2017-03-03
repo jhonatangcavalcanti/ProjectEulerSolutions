@@ -1,6 +1,6 @@
 require('./../scss/style.scss')
 
-import {addSolution} from './problemTemplate'
+import {addSolution} from './main'
 // import Worker from 'worker-loader!./solvers/solverSolution10'
 // let test = require('worker-loader!./solvers/solverSolution1')()
 
@@ -19,11 +19,15 @@ let fn = function () {
   }
 }
 
-if (document.readyState != 'loading') { // should verify alternative solution
+$( () => {
   fn()
-} else {
-  document.addEventListener('DOMContentLoaded', fn)
-}
+})
+
+// if (document.readyState != 'loading') { // should verify alternative solution
+//   fn()
+// } else {
+//   document.addEventListener('DOMContentLoaded', fn)
+// }
 
 // $(document).ready(() => {
 //
