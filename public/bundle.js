@@ -46,19 +46,19 @@
 
 	'use strict';
 
-	var _problemTemplate = __webpack_require__(1);
+	var _main = __webpack_require__(1);
 
-	var _webworkifyWebpack = __webpack_require__(4);
+	var _webworkifyWebpack = __webpack_require__(5);
 
 	var _webworkifyWebpack2 = _interopRequireDefault(_webworkifyWebpack);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(5);
+	__webpack_require__(6);
 	// import Worker from 'worker-loader!./solvers/solverSolution10'
 	// let test = require('worker-loader!./solvers/solverSolution1')()
 
-	var solveds = [{ id: 1, title: 'Multiples of 3 and 5', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(9)) }, { id: 8, title: 'Largest product in a series', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(10)) }, { id: 10, title: 'Summation of primes', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(11)) }, { id: 14, title: 'Longest Collatz sequence', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(12)) }];
+	var solveds = [{ id: 1, title: 'Multiples of 3 and 5', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(10)) }, { id: 8, title: 'Largest product in a series', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(11)) }, { id: 10, title: 'Summation of primes', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(12)) }, { id: 14, title: 'Longest Collatz sequence', worker: (0, _webworkifyWebpack2.default)(/*require.resolve*/(14)) }];
 
 	var fn = function fn() {
 	  var _iteratorNormalCompletion = true;
@@ -69,7 +69,7 @@
 	    for (var _iterator = solveds[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	      var sol = _step.value;
 
-	      (0, _problemTemplate.addSolution)(sol['id'], sol['title'], sol['worker']);
+	      (0, _main.addSolution)(sol['id'], sol['title'], sol['worker']);
 	    }
 	  } catch (err) {
 	    _didIteratorError = true;
@@ -87,12 +87,15 @@
 	  }
 	};
 
-	if (document.readyState != 'loading') {
-	  // should verify alternative solution
+	$(function () {
 	  fn();
-	} else {
-	  document.addEventListener('DOMContentLoaded', fn);
-	}
+	});
+
+	// if (document.readyState != 'loading') { // should verify alternative solution
+	//   fn()
+	// } else {
+	//   document.addEventListener('DOMContentLoaded', fn)
+	// }
 
 	// $(document).ready(() => {
 	//
@@ -107,62 +110,83 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.addSolution = undefined;
+	exports.addSolution = exports.initializePage = undefined;
 
 	var _underscore = __webpack_require__(2);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _utilities = __webpack_require__(3);
+	var _templateProblem = __webpack_require__(3);
+
+	var _templateProblem2 = _interopRequireDefault(_templateProblem);
+
+	var _templateTableProblems = __webpack_require__(4);
+
+	var _templateTableProblems2 = _interopRequireDefault(_templateTableProblems);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var template = _underscore2.default.template('<tr class="tr_problem" id=<%= id %> >\n    <td class="id_column" id="column_id<%= id %>"> <%= id %> </td>\n    <td class="title_column" id="title_column_id<%= id %>"><a class="link link--problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a></td>\n    <td class="button_column"><button id="button_solution<%= id %>" class="button">Show</button></td>\n    <td class="answer_column"><span id="solution<%= id %>" class="result"></span></td>\n  </tr>');
-
-	var fn = function fn() {
-	  var table = document.createElement('TABLE');
-
-	  table.setAttribute('class', 'table');
-	  table.setAttribute('id', 'problems_table');
-	  table.innerHTML += '<caption class="table_title">Solutions of <a class="link link--black" href="https://projecteuler.net">projecteuler.net</a> problems:</caption>\n    <tr class="tr">\n      <th class="th">ID</th>\n      <th class="th">Title</th>\n      <th class="th">Answer</th>\n      <th class="th">Value</th>\n    </tr>';
-
-	  document.body.appendChild(table);
+	var initializePage = exports.initializePage = function initializePage() {
+	  var templateTeste = _underscore2.default.template(_templateTableProblems2.default);
+	  $(document.body).append(templateTeste({}));
 	};
 
-	if (document.readyState != 'loading') {
-	  // should verify alternative solution
-	  fn();
-	} else {
-	  document.addEventListener('DOMContentLoaded', fn);
-	}
-
-	// $( () => { // $(document).ready()
-	//
-	//
-	// })
+	$(function () {
+	  // $(document).ready()
+	  if (!document.getElementById('problems_table')) // fix duplicate table problem on testing script
+	    initializePage();
+	});
 
 	var addSolution = exports.addSolution = function addSolution(id, title, worker) {
-	  //$('#id').append(template())
-	  $('#problems_table').append(template({ id: id, title: title })); // add new row to the table
+	  var template_problem = _underscore2.default.template(_templateProblem2.default);
+
+	  $('#problems_table tbody').append(template_problem({ id: id, title: title })); // add new row to the table
 
 	  var ans = 0;
 	  var text_solution = document.getElementById('solution' + id);
 	  var button_solution = document.getElementById('button_solution' + id);
+	  // change is the function where this refers to the specific button and answer fields on the page
+	  var change = changeButtonStatus.bind({ button: button_solution, answer: text_solution });
 
 	  worker.addEventListener('message', function (e) {
 	    ans = e.data;
-	    (0, _utilities.changeButtonStatus)(button_solution, text_solution, 'Show', ans); // change status to Hide when running ends
+	    change(ans); // sends answer to be visible
 	  });
 
 	  button_solution.addEventListener('click', function () {
-	    if (!ans && button_solution.innerHTML != 'Running') {
+	    if (!ans && this.innerHTML != 'Running') {
 	      // if not calculated yet and is not being calculated
-	      (0, _utilities.changeButtonStatus)(button_solution, text_solution, 'Running'); // change status initialy to running
-	      worker.postMessage({});
+	      worker.postMessage({}); // send message to work start to run the solver
 	    }
-	    (0, _utilities.changeButtonStatus)(button_solution, text_solution, button_solution.innerHTML, ans); // works only when running ends
+	    change(); // change status of button after click on it
 	  });
 	};
+
+	function changeButtonStatus() {
+	  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+	  /**
+	   * @description Change status of the button when it's clicked
+	   * @param {Number} value The problem's answer to insert in the answer field.
+	   */
+	  if (value || this.answer.innerHTML) {
+	    // true when the worker sends the answer or when it was previous calculated
+	    if (value || this.button.innerHTML == 'Show') {
+	      this.button.className = 'button button--state-hidden';
+	      this.button.innerHTML = 'Hide';
+	      this.answer.className = 'result result--state-show';
+	      if (value) this.answer.innerHTML = value;
+	    } else {
+	      this.button.className = 'button button--state-show';
+	      this.button.innerHTML = 'Show';
+	      this.answer.className = 'result result--state-hidden';
+	    }
+	  } else {
+	    // answer was not calculated yet, so solver starts to run
+	    this.button.className = 'button button--state-running';
+	    this.button.innerHTML = 'Running';
+	  }
+	}
 
 /***/ },
 /* 2 */
@@ -1745,76 +1769,16 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/*
-	  el = where the value will be writed
-	  value = new value to write
-	  status = this is the new status of the button
-	*/
-	var changeButtonStatus = exports.changeButtonStatus = function changeButtonStatus(button, el) {
-	  var status = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Show';
-	  var value = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
-	  if (status == 'Running') {
-	    // Running -> Runnning
-	    button.className = 'button button--state-running';
-	    button.innerHTML = 'Running';
-	  } else if (status == 'Show') {
-	    // Show -> Hide (Show only changes to Hide after Running)
-	    button.className = 'button button--state-hidden';
-	    button.innerHTML = 'Hide';
-	    el.className = 'result result--state-show';
-	    el.innerHTML = value;
-	  } else {
-	    // status == "Hide" // Hide -> Show (Hide only changes to show)
-	    button.className = 'button button--state-show';
-	    button.innerHTML = 'Show';
-	    el.className = 'result result--state-hidden';
-	  }
-	};
-
-	var isPrime = exports.isPrime = function isPrime(number) {
-	  /**
-	   * @description Verify if any number is prime.
-	   * @param {Number} number The number to test primarily.
-	   * @returns {Boolean} True if is prime or False otherwise.
-	   */
-	  if (number % 2 == 0 && number != 2) {
-	    return false;
-	  }
-	  for (var i = 3; i < parseInt(Math.sqrt(number) + 2); i += 2) {
-	    if (number % i == 0) {
-	      return false;
-	    }
-	  }
-	  return true;
-	};
-
-	var fib = exports.fib = function fib(term) {
-	  /**
-	   * @description Calculate any number in the Fibonacci sequence.
-	   * @param {Number} term The index of the sequence to calculate; one-based.
-	   * @returns {Number} the nth element of the Fibonacci sequence.
-	   */
-
-	  var current = 1,
-	      previous = 1,
-	      before_previous = 0;
-
-	  for (var n = 1; n < term; n++) {
-	    current = previous + before_previous;
-	    before_previous = previous;
-	    previous = current;
-	  }
-	  return term > 0 ? current : 0;
-	};
+	module.exports = "<tr class=\"tr_problem\" id=<%= id %> >\n\n  <td class=\"id_column\" id=\"column_id<%= id %>\">\n    <%= id %>\n  </td>\n\n  <td class=\"title_column\" id=\"title_column_id<%= id %>\">\n    <a class=\"link link--problem\" href=\"https://projecteuler.net/problem=<%= id %>\" target=\"_blank\"><%= title %></a>\n  </td>\n\n  <td class=\"button_column\">\n    <button id=\"button_solution<%= id %>\" class=\"button\">Show</button>\n  </td>\n\n  <td class=\"answer_column\">\n    <span id=\"solution<%= id %>\" class=\"result\"></span>\n  </td>\n\n</tr>\n";
 
 /***/ },
 /* 4 */
+/***/ function(module, exports) {
+
+	module.exports = "<table id=\"problems_table\" class=\"table\">\n  <caption class=\"table_title\">Solutions of <a class=\"link link--black\" target=\"_blank\" href=\"https://projecteuler.net\">projecteuler.net</a> problems:</caption>\n  <tbody>\n    <tr class=\"tr\">\n      <th class=\"th\">ID</th>\n      <th class=\"th\">Title</th>\n      <th class=\"th\">Answer</th>\n      <th class=\"th\">Value</th>\n    </tr>\n  </tbody>\n</table>\n";
+
+/***/ },
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1903,23 +1867,23 @@
 	};
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(6);
+	var content = __webpack_require__(7);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
+	var update = __webpack_require__(9)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/index.js!./style.scss", function() {
-				var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/sass-loader/index.js!./style.scss");
+			module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/index.js!./style.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -1929,10 +1893,10 @@
 	}
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(7)();
+	exports = module.exports = __webpack_require__(8)();
 	// imports
 
 
@@ -1943,7 +1907,7 @@
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1998,7 +1962,7 @@
 	};
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -2250,7 +2214,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2259,7 +2223,7 @@
 	  value: true
 	});
 	exports.default = work;
-	var solveProblem1 = exports.solveProblem1 = function solveProblem1() {
+	var solveProblem1 = function solveProblem1() {
 	  var sum = 0;
 	  for (var i = 3; i < 1000; i++) {
 	    if (!(i % 3 || i % 5)) {
@@ -2277,7 +2241,7 @@
 	}
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2286,7 +2250,7 @@
 	  value: true
 	});
 	exports.default = worker;
-	var solveProblem8 = exports.solveProblem8 = function solveProblem8() {
+	var solveProblem8 = function solveProblem8() {
 	  var max_prod = 0,
 	      grid = '73167176531330624919225119674426574742355349194934' + '96983520312774506326239578318016984801869478851843' + '85861560789112949495459501737958331952853208805511' + '12540698747158523863050715693290963295227443043557' + '66896648950445244523161731856403098711121722383113' + '62229893423380308135336276614282806444486645238749' + '30358907296290491560440772390713810515859307960866' + '70172427121883998797908792274921901699720888093776' + '65727333001053367881220235421809751254540594752243' + '52584907711670556013604839586446706324415722155397' + '53697817977846174064955149290862569321978468622482' + '83972241375657056057490261407972968652414535100474' + '82166370484403199890008895243450658541227588666881' + '16427171479924442928230863465674813919123162824586' + '17866458359124566529476545682848912883142607690042' + '24219022671055626321111109370544217506941658960408' + '07198403850962455444362981230987879927244284909188' + '84580156166097919133875499200524063689912560717606' + '05886116467109405077541002256983155200055935729725' + '71636269561882670428252483600823257530420752963450';
 
@@ -2309,7 +2273,7 @@
 	}
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2317,12 +2281,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.solveProblem10 = undefined;
 	exports.default = worker;
 
-	var _utilities = __webpack_require__(3);
+	var _utilities = __webpack_require__(13);
 
-	var solveProblem10 = exports.solveProblem10 = function solveProblem10() {
+	var solveProblem10 = function solveProblem10() {
 	  var sum = 0;
 	  for (var i = 2; i < 2000000; i++) {
 	    if ((0, _utilities.isPrime)(i)) {
@@ -2341,7 +2304,52 @@
 	}
 
 /***/ },
-/* 12 */
+/* 13 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var isPrime = exports.isPrime = function isPrime(number) {
+	  /**
+	   * @description Verify if any number is prime.
+	   * @param {Number} number The number to test primarily.
+	   * @returns {Boolean} True if is prime or False otherwise.
+	   */
+	  if (number % 2 == 0 && number != 2) {
+	    return false;
+	  }
+	  for (var i = 3; i < parseInt(Math.sqrt(number) + 2); i += 2) {
+	    if (number % i == 0) {
+	      return false;
+	    }
+	  }
+	  return true;
+	};
+
+	var fib = exports.fib = function fib(term) {
+	  /**
+	   * @description Calculate any number in the Fibonacci sequence.
+	   * @param {Number} term The index of the sequence to calculate; one-based.
+	   * @returns {Number} the nth element of the Fibonacci sequence.
+	   */
+
+	  var current = 1,
+	      previous = 1,
+	      before_previous = 0;
+
+	  for (var n = 1; n < term; n++) {
+	    current = previous + before_previous;
+	    before_previous = previous;
+	    previous = current;
+	  }
+	  return term > 0 ? current : 0;
+	};
+
+/***/ },
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2372,7 +2380,7 @@
 	  return steps;
 	};
 
-	var solveProblem14 = exports.solveProblem14 = function solveProblem14() {
+	var solveProblem14 = function solveProblem14() {
 	  for (var i = 1; i < 1000000; i++) {
 	    chain_size[i] = collatz_steps(i);
 	    if (longest_chain < chain_size[i]) {
