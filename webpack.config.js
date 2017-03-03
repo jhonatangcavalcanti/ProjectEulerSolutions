@@ -3,7 +3,7 @@ let path = require('path')
 let env = process.env.WEBPACK_ENV
 
 let webpackConfig = {
-  entry: path.join(__dirname, 'js', 'entry.js'),
+  entry: path.join(__dirname, 'source', 'js', 'entry.js'),
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
@@ -12,7 +12,8 @@ let webpackConfig = {
     loaders: [
         { test: /\.css$/, loader: 'style-loader!css-loader' },
         { test: /\.js$/, loader: 'babel-loader'},
-        { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'}
+        { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'},
+        { test: /\.html$/, loader: 'html-loader'}
     ]
   },
   plugins: [
