@@ -1,0 +1,19 @@
+<tr class="tr_problem" id=<%= id %> >
+
+  <td class="id_column" id="column_id<%= id %>">
+    <%= id %>
+  </td>
+
+  <td class="title_column" id="title_column_id<%= id %>">
+    <a class="link link--problem" href="https://projecteuler.net/problem=<%= id %>" target="_blank"><%= title %></a>
+  </td>
+
+  <td class="button_column">
+    <button id="button_solution<%= id %>" class="button">Show</button>
+  </td>
+
+  <td class="answer_column">
+    <span id="solution<%= id %>" class="result"></span>
+  </td>
+
+</tr>
