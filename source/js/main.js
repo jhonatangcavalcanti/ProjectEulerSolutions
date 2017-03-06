@@ -17,42 +17,26 @@ export let addSolution = (id, title, worker) => {
 
   $('#problems_table tbody').append(template_problem( { id, title } )) // add new row to the table
 
-  let ans = 0
+  // let ans = 0
   let text_solution = document.getElementById(`solution${id}`)
   let button_solution = document.getElementById(`button_solution${id}`)
   // change is the function where this refers to the specific button and answer fields on the page
   let change = changeButtonStatus.bind({button:button_solution, answer:text_solution})
-  // console.log(worker)
-  // worker.addEventListener('message', function (e) {
-  //   debugger
-  //   console.log('putting answer on table')
-  //   ans = e.data
-  //   console.log('putted')
-  //   change(ans) // sends answer to be visible
-  //   console.log('changing status after put')
-  // })
 
   worker.onmessage = function (e) {
-    // debugger
-    // console.log('putting answer on table')
-    ans = e.data
-    // console.log('putted')
-    change(ans) // sends answer to be visible
-    // console.log('changing status after put')
+    // ans = e.data
+    change(e.data) // sends answer to be visible
   }
 
   button_solution.addEventListener('click', function () {
-    if (!ans && this.innerHTML != 'Running') { // if not calculated yet and is not being calculated
-      // console.log('sending post message')
+    if (!text_solution.innerHTML && this.innerHTML != 'Running') { // if not calculated yet and is not being calculated
       worker.postMessage({}) // send message to work start to run the solver
-      // console.log('postMessage sent')
     }
-    // debugger
     change() // change status of button after click on it
   })
 }
 
-function changeButtonStatus(value='') {
+export function changeButtonStatus(value='') {
   /**
    * @description Change status of the button when it's clicked
    * @param {Number} value The problem's answer to insert in the answer field.
