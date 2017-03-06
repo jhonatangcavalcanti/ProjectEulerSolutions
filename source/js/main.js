@@ -22,16 +22,32 @@ export let addSolution = (id, title, worker) => {
   let button_solution = document.getElementById(`button_solution${id}`)
   // change is the function where this refers to the specific button and answer fields on the page
   let change = changeButtonStatus.bind({button:button_solution, answer:text_solution})
+  // console.log(worker)
+  // worker.addEventListener('message', function (e) {
+  //   debugger
+  //   console.log('putting answer on table')
+  //   ans = e.data
+  //   console.log('putted')
+  //   change(ans) // sends answer to be visible
+  //   console.log('changing status after put')
+  // })
 
-  worker.addEventListener('message', function (e) {
+  worker.onmessage = function (e) {
+    // debugger
+    // console.log('putting answer on table')
     ans = e.data
+    // console.log('putted')
     change(ans) // sends answer to be visible
-  })
+    // console.log('changing status after put')
+  }
 
   button_solution.addEventListener('click', function () {
     if (!ans && this.innerHTML != 'Running') { // if not calculated yet and is not being calculated
+      // console.log('sending post message')
       worker.postMessage({}) // send message to work start to run the solver
+      // console.log('postMessage sent')
     }
+    // debugger
     change() // change status of button after click on it
   })
 }
