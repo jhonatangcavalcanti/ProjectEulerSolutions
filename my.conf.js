@@ -10,13 +10,15 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify', 'jasmine'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
       'public/zepto.js',
+      // 'spec/jasmine_tests/test_worker.js',
       'spec/**/*.js'//,
+      // 'spec/jasmine_tests/tests.bundle.js'
       //'*.js'
     ],
 
@@ -29,17 +31,18 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      //'spec/**/*.js': [ 'babel' ],
-      'spec/**/*.js': [ 'browserify' ],
-      //'spec/**/*.js': [ 'webpack' ]
+      // 'spec/**/*.js': [ 'babel' ],
+      'spec/**/*.js': [ 'webpack' ],
+      // 'tests.bundle.js': [ 'webpack' ]
+      // 'spec/**/*.js': [ 'webpack' ]
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
-
+    // reporters: ['progress'],
+    reporters: ['spec'],
 
     // web server port
     port: 9876,
@@ -71,9 +74,24 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity,
 
-    browserify: {
-      debug: true,
-      transform: [ 'babelify' ]
+    webpack: {
+      module: {
+        loaders: [
+            { test: /\.css$/, loader: 'style-loader!css-loader' },
+            { test: /\.js$/, loader: 'babel-loader'},
+            { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'},
+            { test: /\.html$/, loader: 'html-loader'}
+        ],
+      },
+      // resolve: {
+      //   extensions: ['', '.js']
+      // },
     },
+
+    // browserify: {
+    //   debug: true,
+    //   transform: [ 'babelify' ]
+    // },
+
   })
 }
