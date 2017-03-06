@@ -1,12 +1,7 @@
 require('./../../source/scss/style.scss')
 import work from 'webworkify-webpack'
 import {isPrime, fib} from './../../source/js/utilities'
-import {initializePage, addSolution} from './../../source/js/main'
-// import _ from 'underscore'
-// import {changeButtonStatus} from '../../js/utilities'
-// import work from 'webworkify-webpack'
-
-let teste_work = work(require.resolve('./../../source/js/solvers/solverSolution1'))
+import {initializePage, addSolution, changeButtonStatus} from './../../source/js/main'
 
 describe('Utilities', () => {
 
@@ -53,131 +48,68 @@ describe('Utilities', () => {
 })
 
 describe('Building document', () => {
-  let problem
+  let problem, worker
 
   beforeAll(() => {
     initializePage() // add table and header to the document
     // setting data to test problem
     // table = $('#problems_table tbody')
+    worker = work(require.resolve('./../../spec/jasmine_tests/test_worker'))
 
-    // problem = { id:1, title:'test1', worker:new Worker('base/spec/jasmine_tests/test_worker.js') }
-    problem = { id:1, title:'test1', worker:teste_work }
+    problem = { id:1, title:'test1', worker }
   })
 
-//   beforeAll(() => {
-//     id += 1
-//     title = `problem ${id}`
-//
-//     // console.log(worker)
-//   })
-  // it('should have a table and line with headers on the page', () => {
-    // expect($('#problems_table')).not.toEqual(undefined)
-    // expect($('#problems_table')).toEqual()
-  // })
-//
   it('should add a line to the table', () => {
     let count = document.getElementById('problems_table').rows.length
-    // expect(1).toEqual(1)
-//     worker = new Worker('/base/')
-//     console.log(worker)
-//     worker.onmessage = function(result) {
-//       console.log('expect')
-//       expect(result.data).toEqual(1)
-//       console.log('end')
-//     }
-//     console.log('posting')
-//     worker.postMessage({})
-//     console.log('end')
-    // console.log('worker in spec: ', problem['worker'])
+
     addSolution(problem['id'], problem['title'], problem['worker']) // adding line
+
     expect(document.getElementById('problems_table').rows.length).toEqual(count + 1)
     // expect(Number($(`#column_id${id}`).text())).toEqual(id)
     // expect($(`#title_column_id${id}`).text()).toEqual(title)
   })
-  let button
-  describe('Flow of button', () => {
 
+  describe('Flow of button', () => {
+    let button_solution, text_solution, change
 
     beforeAll( () => {
-      button = document.getElementById(`button_solution${problem['id']}`)
-    })
-
-    beforeEach((done) => {
-      button.click()
-      done()
+      text_solution = document.getElementById(`solution${problem['id']}`)
+      button_solution = document.getElementById(`button_solution${problem['id']}`)
+      change = changeButtonStatus.bind({button:button_solution, answer:text_solution})
     })
 
     it('button should be initially setted to "Show"', () => {
-      expect(button.innerHTML).toEqual('Show')
-
-      // done()
-      // console.log('hi')
-    //   console.log(button.innerHTML)
-    //   // process.nextTick(done) // ends execution of solver() inside addSolution()
-
-      // button.click()
-      // expect(button.innerHTML).toEqual('Show')
-      // done()
-      // button.click()
-    //   expect(button.innerHTML).toEqual('Hide')
-    //   button.click()
-    //   expect(button.innerHTML).toEqual('Show')
+      expect(button_solution.innerHTML).toEqual('Show')
     })
 
-    it('should be "Running" when clicked', () => {
-      // button.click()
-      // expect(button.innerHTML).toEqual('Running')
-      // process.nextTick(done)
+    it('should be "Running" when clicked', (done) => {
+      worker.onmessage = function(e) {
+        change(e.data)
+        done()
+      }
+      button_solution.click()
+      expect(button_solution.innerHTML).toEqual('Running')
     })
 
     it('should be "Hide" after "Running" ends', () => {
-      // debugger
-      // expect(button.innerHTML).toEqual('Hide')
+      expect(button_solution.innerHTML).toEqual('Hide')
     })
 
-    it('should finish your tests when know how to work with workers on tests')
+    it('When button is clicked again, should change status, from hide to show', () => {
+      button_solution.click()
+      expect(button_solution.innerHTML).toEqual('Show')
+    })
 
+    it('and from now on, should change status from hide to show or from show to hide', () => {
+      button_solution.click()
+      expect(button_solution.innerHTML).toEqual('Hide')
+    })
+
+    it('Leave answer hidden', () => {
+      button_solution.click()
+      expect(button_solution.innerHTML).toEqual('Show')
+    })
   })
-
-
-  // describe('Status of button', () => {
-  //   let button
-  //
-  //   beforeAll(() => {
-  //     // button = document.getElementById(`button_solution${id}`)
-  //   })
-  //
-  //   it('Initially button should be Show', () => {
-  //     // expect(button.innerHTML).toEqual('Show')
-  //   })
-
-    // it('When click on Show for the first time, should be Running', function (done) { // function (done)
-    //   button.click()
-    //   expect(button.innerHTML).toEqual('Running')
-    //   // done()
-    //   // process.nextTick(done) // ends execution of solver() inside addSolution()
-    // })
-    //
-    // it('When running ends, should be Hide', () => {
-    //   expect(button.innerHTML).toEqual('Hide')
-    // })
-    //
-    // it('When button is clicked again, should change status, from hide to show for now', () => {
-    //   button.click()
-    //   expect(button.innerHTML).toEqual('Show')
-    // })
-    //
-    // it('and from now on, should change status from hide to show or from show to hide', () => {
-    //   button.click()
-    //   expect(button.innerHTML).toEqual('Hide')
-    // })
-    //
-    // it('and from now on, should change status from hide to show or from show to hide', () => {
-    //   button.click()
-    //   expect(button.innerHTML).toEqual('Show')
-    // })
-
-  // })
 
 //   it('Answer must match', () => {
 //     // expect(Number($(`#solution${id}`).text())).toEqual(solver()) // answer is always equals, will pass all tests
