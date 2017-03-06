@@ -16,7 +16,8 @@ module.exports = {
     "_": false,
     "postMessage": false,
     "self": false,
-    "Worker": false
+    "Worker": false,
+    "dump": false
   },
   "extends": "eslint:recommended",
   "parserOptions": {
