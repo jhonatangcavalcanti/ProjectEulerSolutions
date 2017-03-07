@@ -73,7 +73,7 @@ module.exports = function(config) {
     webpack: {
       module: {
         loaders: [
-            { test: /\.css$/, loader: 'style-loader!css-loader' },
+            // { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.js$/, loader: 'babel-loader'},
             { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'},
             { test: /\.html$/, loader: 'html-loader'}
