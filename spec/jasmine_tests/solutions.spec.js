@@ -1,5 +1,6 @@
 require('./../../source/scss/style.scss')
 import work from 'webworkify-webpack'
+import {solver} from './test_worker'
 import {isPrime, fib} from './../../source/js/utilities'
 import {initializePage, addSolution, changeButtonStatus} from './../../source/js/main'
 
@@ -52,21 +53,15 @@ describe('Building document', () => {
 
   beforeAll(() => {
     initializePage() // add table and header to the document
-    // setting data to test problem
-    // table = $('#problems_table tbody')
     worker = work(require.resolve('./../../spec/jasmine_tests/test_worker'))
-
     problem = { id:1, title:'test1', worker }
   })
 
   it('should add a line to the table', () => {
     let count = document.getElementById('problems_table').rows.length
-
     addSolution(problem['id'], problem['title'], problem['worker']) // adding line
-
+    
     expect(document.getElementById('problems_table').rows.length).toEqual(count + 1)
-    // expect(Number($(`#column_id${id}`).text())).toEqual(id)
-    // expect($(`#title_column_id${id}`).text()).toEqual(title)
   })
 
   describe('Flow of button', () => {
@@ -84,11 +79,11 @@ describe('Building document', () => {
 
     it('should be "Running" when clicked', (done) => {
       worker.onmessage = function(e) {
+        expect(button_solution.innerHTML).toEqual('Running')
         change(e.data)
         done()
       }
       button_solution.click()
-      expect(button_solution.innerHTML).toEqual('Running')
     })
 
     it('should be "Hide" after "Running" ends', () => {
@@ -111,7 +106,9 @@ describe('Building document', () => {
     })
   })
 
-//   it('Answer must match', () => {
-//     // expect(Number($(`#solution${id}`).text())).toEqual(solver()) // answer is always equals, will pass all tests
-//   })
+  it('Answer and others data from table must match', () => {
+    expect(Number(document.getElementById(`solution${problem['id']}`).innerHTML)).toEqual(solver())
+    expect(Number(document.getElementById(`column_id${problem['id']}`).innerHTML)).toEqual(problem['id'])
+    expect(document.getElementById(`title_column_id${problem['id']}`).children[0].text).toEqual(problem['title'])
+  })
 })
