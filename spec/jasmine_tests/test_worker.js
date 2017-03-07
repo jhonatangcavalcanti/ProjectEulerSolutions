@@ -1,4 +1,4 @@
-let solver = () => {
+export let solver = () => {
   return 1
 }
 //
