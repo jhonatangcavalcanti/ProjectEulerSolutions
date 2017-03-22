@@ -11,6 +11,9 @@
     "test:watch": "karma start my.conf.js",
     "lint": "eslint spec js"
   },
+  "engines": {
+    "node": "7.7.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jhonatangomes/ProjectEulerSolutions.git"
