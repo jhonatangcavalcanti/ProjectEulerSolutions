@@ -8,6 +8,6 @@ app.use(express.static(path.join(__dirname, 'dist')))
 //  res.send('This is my first server!');
 //})
 
-app.listen(5000, function() {
+app.listen(process.env.PORT || 5000, function() {
   console.log('serving from port 5000')
 })
