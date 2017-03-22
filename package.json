@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Solutions of problems from project euler implemented in ES6",
   "scripts": {
-    "start": "node server",
+    "start": "node server.js",
     "start:dev": "WEBPACK_ENV=dev webpack-dev-server --progress --colors --content-base public/",
     "release": "WEBPACK_ENV=build webpack",
     "server": "webpack-dev-server --progress --colors --host 0.0.0.0 --port 8080 --content-base public/",
